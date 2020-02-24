@@ -7,6 +7,7 @@
 \newcommand{\gp}{\textsc{g}eo\textsc{p}y\textsc{t}e\textsc{r}~\/}
 \newcommand{\eg}{e.g.~\/}
 \newcommand{\ie}{i.e.~\/}
+\newcommand{\pysal}{\textsc{p}y\textsc{sal}~\/}
 \newcommand{\comment}[1]{\todo[inline, color=green!40]{#1}}
 
 %% Language and font encodings
@@ -20,6 +21,11 @@
 \usepackage{varioref} % for vpageref[above]
 \usepackage{fullpage}
 \usepackage{graphicx} 
+\usepackage{tabularx}
+\newcolumntype{s}{>{\hsize=.25\hsize \raggedright\arraybackslash}X}
+\newcolumntype{b}{>{\hsize=.75\hsize}X} 	
+\usepackage{booktabs}
+\usepackage{wrapfig}
 \usepackage[font=small,labelfont=bf]{caption}
 %% Sets page size and margins
 %\usepackage[letter,top=3cm,bottom=2cm,left=3cm,right=3cm,marginparwidth=1.75cm]{geometry}
@@ -74,74 +80,28 @@ demands placed on those actively teaching in this area.
 
 Although \citet{Donoho2017} traces the origins of data science back to
 \citeauthor{Tukey1962}'s \textit{The future of data analysis}
-(\citeyear{Tukey1962}), its emergence has led to a flourishing of tools and
-programmes as universities seek to engage with this nascent---and
-lucrative---interdisciplinary field. One of the most profound practical impacts
-of this development has been on the ways in which developers share and execute
-code: although systems for combining code, commentary, and results have been
-around for some time (\eg R-Markdown) these were intended primarily for
-replicating research outputs, not for the online teaching of a new technique or
-writing of an interactive introduction to a software library. The `open' ethos
-and rapid growth of data science, and the need for a lightweight interactive
-code-sharing platform mean that teachers in many disciplines are playing
-catch-up on both the methods taught and the formats used.
+(\citeyear{Tukey1962}), it is only recently that this set of previously disparate practices for working with large data sets has begun to be formalised in a way that might allow it to be taught in a university context instead of acquired on the job through `learning-by-doing'. One of the most profound practical impacts of this development has been on the ways in which developers share and execute code: although systems for combining code, commentary, and results have been around for some time (\eg R-Markdown) these were intended primarily for replicating research outputs and not for the teaching of a new technique or writing of an interactive introduction to a software library. The emergence of data science---and the overall pace of change in the tools and programming libraries that it employs---gave new impetus to the search for lightweight ways of sharing code and documentation, and an interactive browser-based technology called Jupyter was the result.
 
-As a discipline, geography has been acutely aware of these developments: changes
-in the volume and extent of geographical data available (\eg
-\citealp{Graham2013,gonzalez2013big,reades2016}), and in the number and range of
-methods employed to identify patterns in those data (\eg
-\citealp{Fan2016,Naik2017,Santibanez2015,Stevens2015,ArribasBel2017}), are
-allowing us to tackle questions thought unanswerable just a few years ago. At
-the same time, however, there is growing evidence of a `hollowing out' of
-traditional domain-specific skills: most of what a trained geographer used to do
-with specialist software can now be done using free online resources (\eg
-Google's Fusion Tables, MapBox, Carto, ArcOnline), but there remains unmet
-demand for graduates who can \textit{code} in order to take advantage of the
-latest (geo)algorithms and techniques \citep{Singleton2014,Singleton2016}.
+As a result, university educators in many disciplines are playing catch-up with both the methods and the tools. Geography has been acutely aware of these developments: changes in the volume and extent of spatial data available (\eg \citealp{Graham2013,gonzalez2013big,reades2016}), and in the number and range of methods employed to identify patterns in those data (\eg \citealp{Fan2016,Naik2017,Santibanez2015,Stevens2015,ArribasBel2017}), are allowing us to tackle questions thought unanswerable just a few years ago. At the same time, there is growing evidence of a `hollowing out' of once domain-specific skills \citep{Singleton2014,Singleton2016}: most of what a trained geographer used to do with specialist Geographic Information Systems (\textsc{gis}) software can now be done using free online resources (\eg Google's Fusion Tables, MapBox, Carto, ArcOnline). However, there remains unmet demand for graduates who can \emph{code} using the latest (geo)algorithms and techniques, so in this article we present a means of bringing the benefits of data science-approaches to instruction using Jupyter `notebooks' to the teaching of Python programming and geospatial analysis: Geographical Python Teaching Resources (GeoPyTer).
 
 \section{Statement of Need}
 
-Regardless of whether this is a revolution \citep{Wyly2014,Torrens2010} or an
-evolution \citep{Barnes2013,Barnes2014,ArribasBel2018}, there is no question
-that teaching students and researchers how to code and how to \textit{think}
-computationally presents new challenges
-\citep{Etherington2016,Muller2014,rey_09jgs} and that there is little in the way of a tradition of doing so to a high level within Geography (see surveys in \citealp{Bowlick2017,Bowlick2018}). Consequently, the majority of resources used in the
-classroom are being developed from scratch at each institution, and often by
-newly-appointed lecturers and assistant professors coming from the relatively
-small number of elite research facilities active in this domain (see discussion
-in \citealp{esrc2013}). Not only has this led to the duplication of effort at
-multiple sites, but it has also had an enormous impact on the productivity---as
-commonly measured by institutions---of early career researchers, many of whom
-are in their first teaching post.
+Regardless of whether this is a revolution \citep{Wyly2014,Torrens2010} or an evolution \citep{Barnes2013,Barnes2014,ArribasBel2018}, there is no question that teaching students and researchers how to code and how to \textit{think} computationally presents new challenges \citep{Etherington2016,Muller2014,rey_09jgs} and that there is little in the way of a tradition of doing so to a high level within Geography (see surveys in \citealp{Bowlick2017,Bowlick2018}). Consequently, the majority of resources used in the classroom are being developed from scratch at each institution, often by newly-appointed lecturers and assistant professors coming from the relatively small number of elite research facilities active in this domain (see discussion in \citealp{esrc2013}). Not only has this led to the duplication of effort at multiple sites, but it has also had an enormous impact on the productivity of early career researchers, many of whom are in their first teaching post, as commonly measured by universities.
 
 The overarching purpose of this software is therefore to address two seemingly
 contradictory issues: the recognition that no two instructors teach in precisely
 the same way, and the fact that few instructors have the luxury of both time and
-tenure to develop compelling new course material in splendid isolation. This
+tenure to develop compelling new course material in splendid isolation. This is 
 where the Geographical Python Teaching Resource
 (\textsc{g}eo\textsc{p}y\textsc{t}e\textsc{r}) comes into play: although
 developed with geographers in mind, it provides a generic means by which
 instructors in any discipline can selectively incorporate and re-mix programming
 and conceptual content from existing Jupyter notebooks while providing their own
-`gloss' for this content. Our approach therefore seeks to develop a richer, open
-community of developers and teachers who work \textit{together} on new teaching
-materials, and to support instructors in quickly adapting existing materials to
-new delivery formats.
+`gloss' for this content. Our approach therefore seeks to develop a rich community of developers and teachers who work \textit{together} on new teaching materials, who make their output entirely \emph{open} to the wider community, and whoe support instructors in quickly adapting existing materials to new delivery formats. 
 
 \section{Origins and Inspirations}\label{origins-and-inspirations}
 
-Like many open source projects, \gp grew out of a need to scratch an itch: in
-our roles as teachers of (geo)computational concepts and methods we grappled on
-an annual basis with the demands of developing and updating instructional
-material with complex interdependencies. And, while the fundamental computing
-and analytic concepts may remain fairly stable, the field is highly-dynamic in
-terms of both the content and the rate of evolution of new features in
-contributed code upon which we rely for functionality. Currently, every time a
-widely-used library package is updated a protracted sequence of revisions
-ensues: some teachers, pressed for time, may resist making use of---or even
-alerting students to---the new features; others may leap in enthusiastically,
-only to discover that they hadn't fully thought through the challenges of
-conflicting dependencies and evolving feature sets.
+Like many open source projects, \gp grew out of a need to scratch an itch: in our roles as teachers of (geo)computational concepts and methods we grappled on an annual basis with the demands of developing and updating instructional material with complex interdependencies. And, while the fundamental computing and analytic concepts may remain fairly stable, the field is highly-dynamic in terms of both the content (\ie what should be in the curriculum) and the code (\ie how applications should be taught). Currently, every time a widely-used library package is updated a protracted sequence of revisions ensues: some teachers, pressed for time, may resist making use of---or even alerting students to---the new features; others may leap in enthusiastically, only to discover that they hadn't fully thought through the challenges of conflicting dependencies and evolving feature sets.
 
 We initially explored with others---faculty with whom we regularly
 collaborate---the potential to `divide and conquer': we would each focus on
@@ -172,9 +132,9 @@ We drew inspiration from the \textsc{foss} iPython project
 \citep{perez_2007_ipython} and its transformative impact on the sharing of
 integrated code, text, and multimedia resources. And we also looked to the
 Python Spatial Analysis Library (\textsc{p}y\textsc{sal}) project
-\cite{rey_19sea}in which contributors take ownership of application areas
+\cite{rey_19sea} in which contributors take ownership of application areas
 through managed collaboration instead of a contributory `free-for-all'. The
-subsequent emergence of the Jupyter project \cite{kluyver16} from iPython has
+subsequent emergence of the Jupyter project \citep{kluyver16} from iPython has
 led to the rapid growth of a rich ecosystem of tools that support the kinds of
 interaction needed to make this an effective teaching resource:
 multiuser-notebooks (jupyterhub), automation of grading (nbgrader), interactive
@@ -193,7 +153,7 @@ supporting them with a library of up-to-date materials from which they can pick
 and choose. So in much the same way that a computer application is compiled from
 the contributions of many developers, \gp allows individual classes and entire
 courses to be `compiled' from the contributions of many skilled teachers and
-developers. As such, this positions our work within contextualised programming initiatives \citep{Guzdial2010,Lukkarinen2016} of which the CS+X approach is perhaps best-known \citep[][\eg]{Mir2017}; however, \gp represents a significant advance in this area since it not only builds in context at the level of individual modules, but at the level of a shared set of teaching resources as well!
+developers. As such, this positions our work within contextualised programming initiatives \citep{Guzdial2010,Lukkarinen2016} of which the CS+X approach is perhaps best-known \citep[\eg][]{Mir2017}; however, \gp represents a significant advance in this area since it not only builds in context at the level of individual modules, but at the level of a shared set of teaching resources as well!
 
 \section{System Architecture}\label{system-architecture}
 
@@ -202,10 +162,7 @@ is such that the gap between what instructors know and what students know is
 substantial, and in many cases might even be growing. The differences within
 individual student cohorts may be greater still, however, and while students
 need to be able to begin their learning `journey' at some arbitrary point in the
-progression from `learning to code' towards `computational social scientist'
-\citep{Lazer2009}, instructors require the ability to assemble a course that
-meets students where they \emph{are} rather than where the instructor or
-institution might \emph{wish} them to be. At the same time, there is also a strong need to support more open-ended exploration during `practicals' \citep{Unwin1980}, particularly by more advanced students who may `tune out' if the means of progression is overly structured and rigid.
+progression from `learning to code' towards environmental, geospatial, or computational social scientist \citep{Lazer2009}. Instructors require the ability to assemble a course that meets students where they \emph{are} rather than where the instructor or institution might \emph{wish} them to be. At the same time, there is also a strong need to support more open-ended exploration during `practicals' \citep{Unwin1980}, particularly by more advanced students who may `tune out' if the means of progression is overly structured and rigid\ldots or just too slow to keep their attention.
 
 The guiding insight behind \gp is that instruction in computation proceeds from
 fundamental units of learning typically built around \textit{computing} concepts
@@ -233,48 +190,26 @@ table, we felt that they could be grouped together into sets of related
 concepts: the fundamentals of programming, point pattern analysis, machine
 learning, etc.
 
-Each atom would employ \emph{domain-specific} illustrative examples and code so
-as to anchor learning in relevant problems and applications. An atom on arrays
-written for geographers could start by showing how these simple data structures
-can be used to hold data about cities (\eg name, country, population); but a
-subsequent unit could build on this with an an illustration of how nested data
-structures allow us to add city location using nested coordinate pairs (\eg
-latitude and longitude within an array-of-arrays). This is why managed
-collaboration around sets of related concepts is so important: quite aside from
-the fact that no \textsc{foss} project succeeds without some level of executive
-control, it's critical that \textit{someone} is responsible for ensuring a
-degree of consistency in how the units fit together within a set of
-closely-related topics.
+\begin{wraptable}{r}{0.6\textwidth}
+\centering
+\caption{Overview of System Components}
+\label{table:1}
+\begin{tabularx}{0.6\textwidth} {sb}
+ \toprule
+ \textbf{Concept} & \textbf{Usage} \\
+ \midrule
+ Atom  & A `teachable idea' combining explanation and code for a core, typically singular, concept (\eg Variables, Lists, Projections, Robust Rescaling\ldots). \\
+ Sessions  & A `teachable unit' combining \textbf{multiple atoms} for delivery in a particular learning context (\eg Beginner Lab-based Course, Intermediate Flipped Module, Online Course\ldots) \\
+ Modules  & A \textbf{sequence of sessions} designed to achieve one or more pedagogical objective and/or required for credit in a particular education context. \\
+\bottomrule 
+\end{tabularx}
+\end{wraptable}
 
-The purpose of the bottom-up approach is that these units can then be flexibly
-assembled into Sessions: from the \textit{same ingredients} (\ie atoms) the
-instructor could create two quite different modules---one for delivery in
-person, one for delivery online---by organising the elements in different ways.
-Quite simply, we don't want to have to rewrite material for each format:
-lecture/practical, `flipped' classroom, or \textsc{mooc}. Furthermore, sessions
-designed for experts (\eg those pursuing continuing online education) might be
-able to `move' students through many more atoms of instruction in a single
-session than a similarly laid out (in terms of time) session designed for
-first-time programmers in an undergraduate programme. So sessions need to be
-able to \emph{incorporate} atoms in a way that minimises the level of effort
-involved in finding the `best' way to, for example, explain the concept of
-recursion while maximising the ability of the instructor to relate this concept
-to the students' practical experience (\eg by providing a `context' that is
-anchored in a locally relevant `story' or data).
+Each atom would employ \emph{domain-specific} illustrative examples and code so as to anchor learning in problems and applications relevant to the learner. An Atom on arrays written for geographers could start by showing how these simple data structures can be used to hold data about cities (\eg name, country, population); but a subsequent unit could build on this with an an illustration of how nested data structures allow us to add city location using nested coordinate pairs (\eg latitude and longitude within an array-of-arrays). This is why managed collaboration around sets of related concepts is so important: quite aside from the fact that no \textsc{foss} project succeeds without some level of executive control, it's critical that \textit{someone} is responsible for ensuring a degree of consistency in how the units fit together within a set of closely-related topics.
 
-Naturally, Sessions can then be grouped into Learning Modules (modules) that
-offer a coherent instructional programme over a period of weeks or months.
-Modules represent the highest level of abstraction in the proposed system, but
-they are also obviously the starting point from which instructors can organise
-their (remixed) atomic and sessional material into something incorporating a set
-of learning outcomes and a package of assessment appropriate to their students.
-However, our design reflects the expectation that contributions to \gp at each
-\emph{level} of instruction might be made by \emph{different} people: a domain
-expert in Spatial Bayes might be the right person to develop an Atom on the
-concept and its application, but not the right person to develop a module
-tackling advanced spatial analytic concepts where this is just one approach
-amongst many. Similarly, given the global diversity of delivery formats, a
-10-week term in Britain enables students to cover a very different `volume' of
+The purpose of the bottom-up approach is that these units can then be flexibly assembled into Sessions: from the \textit{same ingredients} (\ie Atoms) the instructor could create two quite different modules---one for delivery in person, one for delivery online---by organising the elements in different ways. Quite simply, we don't want to have to rewrite material for each format: lecture/practical, `flipped' classroom, or online course. Furthermore, sessions designed for experts (\eg those pursuing continuing online education) might be able to `move' students through many more atoms of instruction in a single session than a similarly laid out (in terms of time) session designed for first-time programmers in an undergraduate programme. So sessions need to be able to \emph{incorporate} atoms in a way that minimises the level of effort involved in finding the `best' way to, for example, explain the concept of recursion while maximising the ability of the instructor to relate this concept to the students' practical experience (\eg by providing a `context' that is anchored in a locally relevant `story' or data).
+
+Naturally, Sessions can then be grouped into Learning Modules (modules) that offer a coherent instructional programme over a period of weeks or months. Modules represent the highest level of abstraction in the proposed system, but they are also obviously the starting point from which instructors can organise their (remixed) atomic and sessional material into something incorporating a set of learning outcomes and a package of assessment appropriate to their students. However, our design reflects the expectation that contributions to \gp at each \emph{level} of instruction might be made by \emph{different} people: a domain expert in Spatial Bayes might be the right person to develop an Atom on the concept and its application, but not the right person to develop a module tackling advanced spatial analytic concepts where this is just one approach amongst many. Similarly, given the global diversity of delivery formats, a 10-week term in Britain enables students to cover a very different `volume' of
 content from a 15-week American semester. \gp recognises and seeks to respond to
 that diversity at all levels.
 
@@ -291,8 +226,7 @@ project and its ability to provide in-browser access to the Python
 interpreter\footnote{Other languages are also possible using different kernels;
 there is no reason that \gp couldn't be used to create instructional materials
 in these languages as well.}, and it also takes advantage of the dominance of
-Git and GitHub for version control as a means for tracking authorship across
-many versions and changes.
+the Git tool---and the GitHub service/web site---for version control as a means for tracking authorship across many versions and changes.
 
 In theory, thanks to the combination of Jupyter and GitHub is not even necessary
 for the novice user to have Python installed on their own computer: since all
@@ -311,11 +245,65 @@ structure is provided through headers in markdown cells: a `\#' pre-pended to a
 line of text is generally taken to be the title of the notebook; `\#\#' at the
 start of a line provides a second level of structure (\ie level 2 headers);
 `\#\#\#' indicates level 3 headers; etc. For our purposes, what's relevant is
-that these headers yield a natural hierarchy that corresponds closely to the
-h1\ldots{}h6 model used by the HTML markup language that lies at the heart of
-the World Wide Web. This hierarchy allows us to `abstract out' the problem of
-inferring the \emph{meaning} of different sections of the notebook since the
-instructor does it for us.
+that these headers naturally yield a semantic hierarchy that corresponds closely to the h1\ldots{}h6 model used by the HTML markup language that lies at the heart of the World Wide Web. This hierarchy allows us to `abstract out' the problem of inferring the \emph{meaning} of different sections of the notebook since the instructor does it for us through their use of headers.
+
+\subsection{Approach}
+
+In order to compile Atoms into Sessions and Modules, \gp necessarily requires a compositional syntax. We've noted the conceptual mapping between markdown and \textsc{html} formatting, above but how do we select some mix of code and markdown material in one notebook to be incorporated into another? And how do we do this in a way that is both simple to express and able to resolve ambiguity? Fortunately, such a model already exists and was hinted at in Figure \ref{fig:Illustration}: Cascading Style Sheets (\textsc{css}) uses well-understood `selectors' to specify one or more elements on a web page to which a set of presentational styles should be applied. 
+
+With \textsc{css} an `h1' in a style sheet indicates that all \textsc{html} Level 1 Headers should observe the styling rules declared immediately afterwards; while `h1.important' specifies that only a Level 1 Header of the class `important' should be selected. In fact, \textsc{css} also allows for nested selectors: for some element(s) of a `larger' selection to be selected in turn. This is normally used to do things like specify mouseover behaviours for a menu: that all anchors (\ie links) that are within a division of class \texttt{menu} should act in \textit{this} way when the mouse passes over them. What is particularly elegant about this approach is that it provides a means for selecting and styling multiple pieces of content in the document in one declaration (where this is desirable) \textit{and} a means for disambiguating content with the same name but in different locations within a document's hierarchical structure (where it is not). 
+
+Conceptually, \gp reframes this in terms of the meaning imparted by the instructor to the notebook: all cells coming after a Level 1 Header are considered to be part of that element's semantic field until another Level 1 Header is encountered or the end of the document is encountered, whichever comes first. So a Level 2 Header coming `after' (or `below', if you prefer) a Level 1 Header is still part of that higher-level element's semantic field, \textit{but} we can select it uniquely within the notebook using the standard \textsc{css} form of \texttt{h1.content h2.subcontent}. And with this we have essentially repurposed \textsc{css} as a means of selecting and importing content from one notebook into another! This is illustrated in schematic form in Figure \ref{fig:structure} where the \texttt{>} imply a hierarchical relationship.
+
+\begin{wrapfigure}{r}{0.51\textwidth}
+  \centering
+  \caption{Illustration of Atom Structure}
+  \includegraphics[width=0.5\textwidth]{Single_Document.pdf}
+  \label{fig:structure}
+\end{wrapfigure}
+
+Unfortunately, the nature of Jupyter notebooks does not allow this to happen dynamically at run-time, but it does allow something similar to happen when an instructor is `compiling' new Sessional and Module content. In short, the instructor writes whatever content they wish but, using syntax similar to the examples below, wherever they want to incorporate contributed content from \gp (or elsewhere) they have only to `include' it by specifying both a source and a selection. And this approach also works recursively: a notebook can include content from a notebook that itself includes content from another notebook\ldots
+
+\subsection{Syntax}\label{syntax}
+
+Adopting the approach outlined above: we typically envision an Atom as a short notebook focussing on a core concept or method (\eg lists, object-oriented design, or spatial autocorrelation); some or all of each Atom can then be selected and imported into a Session, which is itself a notebook; and the sessions can then be selected and managed through a Module, which can be a notebook or a set of notebooks. This process is initiated by the instructor creating a blank text cell in a Jupyter notebook and writing an `include' statement. The statement should be the \textit{only} content in the cell since \gp will be replacing the cell with an unknown number of whole text and code cells from the referenced notebook.
+
+Crucially, \texttt{include} statements can be freely intermingled with the instructor's own content, allowing the instructor to `frame' the concepts in a way that suits their teaching style but which saves them having to reinvent the wheel for each class. A Session tackling standardisation could include elements of the relevant Atom from \gp while still allowing the instructor to interject comments, observations, questions, and additional tasks to ground the learning experience in the local context (individual, institutional, etc.). To illustrate this more clearly, an Atom on Python's approach to dealing with lists could be incorporated into a longer Session as follows:
+
+\begin{Verbatim}[fontsize=\small]
+@include {
+    'nb'     = 'http://geopyter.org/atoms/fundamentals/lists.ipynb',
+    'select' = 'h1.Lists'
+}
+\end{Verbatim}
+
+\texttt{nb} is a path---local or remote---to a valid Jupyter notebook from which the Session or Module developer wants to import content. The \texttt{select} parameter specifies a selector for which the \gp tool will search within the source notebook. All content from that point onwards \emph{up to the next selector at he same level} will the then be copied into the compiled notebook. In example above, if there were a following \texttt{h1} covering, for example, `List Operators' then this would \emph{not} be included because, from a structural standpoint, it is of equal importance (at the same level in the hierarchy) to `Lists' but has \emph{not} been selected. Furthermore, any \texttt{h2} or \texttt{h3} subsections within the `Lists' section \textit{would} be included since they are presumed to be providing pedagogical and logical structure to the Understanding Lists section and so should be carried over.
+
+Clearly, an instructor might want to import only part of of a section, or to
+suppress a subsection falling in the middle of a larger resource. In
+anticipation of this need, more complex `include' statements with no equivalent
+in \textsc{css} are also possible:
+
+\begin{Verbatim}[fontsize=\small]
+@include {
+    'resource' = 'http://geopyter.org/atoms/fundamentals/lists.ipynb',
+    'select' = 'h1.Lists -h3.Lists Example; h1.List Operators -h2.Concatenation'
+}
+\end{Verbatim}
+
+In this second example, two level 1 section are imported at the same time (the
+selections are separated with semi-colons) and a level 3 subsection from
+\emph{within} each of those sections is suppressed using the `-' syntax to
+indicate that the section should be removed. An additional difference from true
+\textsc{css} is that we allow spaces in the `selector' because we felt that
+asking teachers to translate between a natural language header (``Understanding
+Lists'') and what \textsc{css} would consider a safe header
+(``Understanding\_Lists'') would detract from ease-of-use. A second departure
+from the \textsc{css} standard is that selectors are not separated with commas:
+we wanted to allow for this punctuation to be part of a section heading and felt
+that semi-colons are rather more rare in that context.
+
+\subsection{Putting it All Together}
 
 Notebooks are actually stored in a format called JavaScript Object Notation
 (\textsc{json}) that is not particularly easy for most humans to read, but as it
@@ -344,7 +332,7 @@ may help to clarify why this process is so useful.
 
 \begin{figure}[hbtp]
   \centering
-  \includegraphics[width=\textwidth, angle=0]{Illustration.pdf}
+  \includegraphics[width=\textwidth, angle=0]{Multiple_Documents.pdf}
   \caption{Illustration of \gp Notebook `Compilation' Process}
   \label{fig:Illustration}
 \end{figure}
@@ -361,104 +349,6 @@ compiled notebooks so that credit is retained, and users and institutions can
 better-understand the extent to which \gp is a \emph{joint} project relying on
 the contributions of many teachers and developers.
 
-\subsection{Syntax}\label{syntax}
-
-The final element of \gp is necessarily a syntax for specifying how Sessions and
-Modules should be compiled from Atoms. We've noted the technical mechanism, as
-well as the mapping between markdown and \textsc{html} formatting, above but how
-do we select some mix of code and markdown material in one notebook to be
-incorporated into another? And how do we do this in a way that is both simple to
-express and able to resolve ambiguity? Fortunately, such a model already exists
-and was hinted at in Figure \ref{fig:Illustration}: Cascading Style Sheets
-(\textsc{css}) uses well-understood `selectors' to specify one or more elements
-on a web page to which a set of presentational styles should be applied: an `h1'
-in a style sheet indicates that all level 1 headers should observe the styling
-rules declared immediately afterwards; while `h1.important' specifies that only
-a level 1 header of the class `important' should be selected. More powerfully,
-`h1.important a.super' selects \emph{only} anchors of the class `super' that
-fall `within' (or `under', if you prefer') a level 1 header of the `important'
-class.
-
-What is particularly elegant about this approach is that it provides a means for
-selecting and styling multiple pieces of content in the document in one
-declaration (where this is desirable) \textit{and} a means for disambiguating
-content with the same name but in different positions within a document's
-hierarchical structure (where it is not). We have essentially repurposed
-\textsc{css} as a means of selecting and importing content from one notebook
-into another! Unfortunately, the nature of Jupyter notebooks does not allow this
-to happen dynamically at run-time, but it does allow something similar to happen
-when an instructor is `compiling' new Sessional and Module content. In short,
-the instructor writes whatever content they wish but, using syntax similar to
-the examples below, wherever they want to incorporate contributed content from
-\gp (or elsewhere) they have only to write an `include' statement to select and
-import sections of another notebook. This approach also works recursively: a
-notebook can include content from a notebook that itself includes content from
-another notebook\ldots
-
-Adopting the language used above: we envision an Atom as a short notebook
-focussing on a single concept or method (\eg lists, object-oriented design, or
-spatial autocorrelation); some or all of each Atom can then be selected and
-imported into a Session, which is itself a notebook; and the sessions can then
-be selected and managed through a Module, which can be a notebook or a set of
-notebooks. This process is initiated by the instructor creating a blank text
-cell in a Jupyter notebook and writing an `include' statement. The statement
-should be the \textit{only} content in the cell since \gp will be replacing the
-cell with an unknown number of whole text and code cells from the referenced
-notebook.
-
-Crucially, `include' statements can be freely intermingled with the instructor's
-own content, allowing the instructor to `frame' the concepts in a way that suits
-their teaching style but which saves them having to reinvent the wheel for each
-class. A Session tackling standardisation could include elements of the relevant
-Atom from \gp while still allowing the instructor to interject comments,
-observations, questions, and additional tasks to ground the learning experience
-in the local context (individual, institutional, etc.). To illustrate this more
-clearly, an Atom on Python's approach to dealing with lists could be
-incorporated into a longer Session as follows:
-
-\begin{Verbatim}[fontsize=\small]
-@include {
-    'nb'     = 'http://geopyter.org/atoms/fundamentals/lists.ipynb',
-    'select' = 'h1.Understanding Lists'
-}
-\end{Verbatim}
-
-The `nb' is the path---local or remote---to a valid Jupyter notebook from which
-the Session or Module developer wants to import content. The `select' parameter
-specifies a selector for which the \gp tool will search within the source
-notebook. All content from that point onwards \emph{up to the next selector at
-the same level} will the then be copied into the compiled notebook. In example
-above, if there were a following h1 covering, for example, `List Operators' then
-this would \emph{not} be included because, from a structural standpoint, it is
-of equal importance (at the same level in the hierarchy) to `Understanding
-Lists' but has \emph{not} been selected. Furthermore, any h2 or h3 subsections
-within the `Understanding Lists' section \textit{would} be included since they
-are presumed to be providing pedagogical and logical structure to the
-Understanding Lists section and so should be carried over.
-
-Clearly, an instructor might want to import only part of of a section, or to
-suppress a subsection falling in the middle of a larger resource. In
-anticipation of this need, more complex `include' statements with no equivalent
-in \textsc{css} are also possible:
-
-\begin{Verbatim}[fontsize=\small]
-@include {
-    'resource' = 'http://geopyter.org/atoms/fundamentals/lists.ipynb',
-    'select' = 'h1.Understanding Lists -h3.Lists Example; h1.Using Lists -h3.Another Example'
-}
-\end{Verbatim}
-
-In this second example, two level 1 section are imported at the same time (the
-selections are separated with semi-colons) and a level 3 subsection from
-\emph{within} each of those sections is suppressed using the `-' syntax to
-indicate that the section should be removed. An additional difference from true
-\textsc{css} is that we allow spaces in the `selector' because we felt that
-asking teachers to translate between a natural language header (``Understanding
-Lists'') and what \textsc{css} would consider a safe header
-(``Understanding\_Lists'') would detract from ease-of-use. A second departure
-from the \textsc{css} standard is that selectors are not separated with commas:
-we wanted to allow for this punctuation to be part of a section heading and felt
-that semi-colons are rather more rare in that context.
 
 \section{Use Cases}\label{uses}
 
@@ -471,7 +361,7 @@ generally.
 
 There has been increasing interest at universities in Massive Open Online
 Courses, or \textsc{mooc}s, as vehicles for expanding access to higher education
-through online delivery. For HE managers, the \textsc{mooc} promises both
+through online delivery. For managers in Higher Education (\textsc{he}), the \textsc{mooc} promises both
 enhanced revenue---depending on the model this implies either more people paying
 to take the modules or more paying for a certificate of completion at the
 end---and enhanced access as people who would be unable to attend the university
@@ -531,29 +421,21 @@ geography, political science, or literature major.
 
 \section{Engagement}\label{engagement}
 
-Because it builds on \textsc{foss} approaches to software development, we expect
-\gp to benefit from network effects: the more people use it, the more useful it
-becomes, and the more people use it. In common with many such projects we
-\emph{do} expect that a relatively small subset of users will contribute the
-majority of the content; however, unlike a traditional software project there is
-an important role for \emph{teachers}, not just highly-skilled \emph{developers}
-and we think that this represents a really exciting opportunity for innovative
-new approaches to rise to the surface. There may be only a few who can write the
-Python code to conduct a Geographically-Weighted Regression analysis, but it
-will be interesting to see how many creative, insightful ways there are to
-explain it!
+Because it builds on \textsc{foss} approaches to software development, we expect \gp to benefit from network effects: the more people use it, the more useful it becomes, and the more people use it. The open source, peer-generated approach would, however, also be likely to present something of a challenge over time: as more people seek both to use and to contribute to \gp we would be likely to see the emergence of divergent norms, examples, and data across Atoms, Sessions, and Modules. In other words, the coherence of \gp as a teaching platform would become a victim of any real success in terms of widespread adoption.
 
-\gp also acknowledges the reality of the need for peer and professional
-recognition by incorporating attribution mechanisms through which faculty can be
-credited for their work. Contributors can be recognised as the author of content
-elements through a Digital Object Identifier (\textsc{doi}), and The \gp team
-would also include section editors responsible for the curation of atoms and for
-maintenance of official \gp \textsc{doi}s. Instructors who use \gp to compose
-sessions or courses can also contribute those modules back to the project and
-would also be recognised as the author of record in a similar fashion.
-Authorship of \gp educational components, be they atoms, sessions or modules,
-provides the contributors with peer-evaluated, impactful materials to add to
-their promotion applications.
+\subsection{Coordination}
+
+Here we believe that the \pysal project offers a useful template. Although \pysal is a free open source project, it is \emph{not} a free-for-all: domain specialists tend to gravitate towards those parts of the project to which they have the most to contribute and, over time, those who coordinate and enable the most substantive contributions to the codebase in terms of features and performance tend to become the `managers' of individual components of the overall tool (\eg lib, model, explore, viz). Overall project coherence is maintained via regular calls and online discussion boards, and a synchronised release schedule so that changes can be coordinated and knock-on effects identified.
+
+We expect \gp to follow a similar path in that a relatively small subset of users will contribute the majority of the content; however, unlike a traditional software project there is an important role for \emph{teachers}, not just highly-skilled \emph{developers}. We think that this represents a really exciting opportunity for innovative new approaches to rise to the surface. There may be only a few who can write the Python code to conduct a Geographically-Weighted Regression analysis, but it will be interesting to see how many creative, insightful ways there are to explain it! 
+
+The educational focus implies that it may well be the most committed teachers who end up coordinating and reviewing contributions to \gp from other instructors and developers. We would also argue for the relevance of grouping sets of Atoms together in basic libraries such as `foundations' (the basics of variables and data structures); `description' (describing data); etc. Within these sets, contributions would be managed by a coordinator to ensure that examples, style, and other features are consistent for use in a set of Sessions introducing Python programming, or Local Indicators of Spatial Autocorrelation.
+
+The key to \gp is that it seeks to balance the benefits of code-sharing with those of local expertise: the instructor is free to write their own exegesis, if you will, of the code and its relevance to a particular Session or Module, but the burden of developing a cogent, domain-specific demonstration can be shared with others and compelling examples more widely adopted without the effort of reinventing the wheel. Where irreconcilable differences arise between pedagogical approaches or models, then we might expect to see small groups of collaborators `fork' the codebase and offer their own models; this is, of course, a valid approach with open source code and one from which all instructors can ultimately benefit!
+
+\subsection{Credit}
+
+\gp also acknowledges the reality of the need for peer and professional recognition by incorporating attribution mechanisms through which faculty can be credited for their work. Contributors can be recognised as the author of content elements through a Digital Object Identifier (\textsc{doi}), and The \gp team would also include section editors responsible for the curation of atoms and for maintenance of official \gp \textsc{doi}s. Instructors who use \gp to compose sessions or courses can also contribute those modules back to the project and would also be recognised as the author of record in a similar fashion. Authorship of \gp educational components, be they atoms, sessions or modules, provides the contributors with peer-evaluated, impactful materials to add to their promotion applications.
 
 Although the open source nature of the project means that we cannot strictly
 enforce attribution, \gp seeks to make this the easier to do `by default'
