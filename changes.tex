@@ -1,0 +1,680 @@
+\documentclass[letter, 11pt,titlepage]{article}
+%DIF LATEXDIFF DIFFERENCE FILE
+%DIF DEL original.tex   Wed Mar  4 08:13:39 2020
+%DIF ADD Geopyter.tex   Wed Mar  4 08:05:19 2020
+
+% Need to do some more reading: http://plain-text.co/pull-it-together.html
+% Convert from LaTeX to Markdown:
+% pandoc --standalone --wrap=none --base-header-level=2 -f latex -t gfm+smart+citations --filter=pandoc-citeproc --bibliography=Geopyter.bib --csl=apalike.csl -M Title="GeoPyTeR: Mashable (Geography) Teaching Resources for Python" -B header.md Geopyter.tex -o README.md
+
+\newcommand{\gp}{\textsc{g}eo\textsc{p}y\textsc{t}e\textsc{r}~\/}
+\newcommand{\eg}{e.g.~\/}
+\newcommand{\ie}{i.e.~\/}
+%DIF 10a10
+\newcommand{\pysal}{\textsc{p}y\textsc{sal}~\/} %DIF > 
+%DIF -------
+\newcommand{\comment}[1]{\todo[inline, color=green!40]{#1}}
+
+%% Language and font encodings
+\usepackage[english]{babel}
+\usepackage[utf8x]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[hyphens]{url}
+\usepackage{fancyvrb} % facny verbatim
+\usepackage{textcomp}
+\usepackage{upquote}  % Turns quotes in verbatim to straight
+\usepackage{varioref} % for vpageref[above]
+\usepackage{fullpage}
+\usepackage{graphicx} 
+%DIF 23a24-28
+\usepackage{tabularx} %DIF > 
+\newcolumntype{s}{>{\hsize=.25\hsize \raggedright\arraybackslash}X} %DIF > 
+\newcolumntype{b}{>{\hsize=.75\hsize}X} 	 %DIF > 
+\usepackage{booktabs} %DIF > 
+\usepackage{wrapfig} %DIF > 
+%DIF -------
+\usepackage[font=small,labelfont=bf]{caption}
+%% Sets page size and margins
+%\usepackage[letter,top=3cm,bottom=2cm,left=3cm,right=3cm,marginparwidth=1.75cm]{geometry}
+%DIF 26a32-47
+ %DIF > 
+%% For writing 'code' in LaTeX %DIF > 
+\usepackage{textcomp} %DIF > 
+\usepackage{listings} %DIF > 
+\lstloadlanguages{Python,Perl,HTML} %DIF > 
+\usepackage[dvipsnames]{xcolor} %DIF > 
+\definecolor{LightGray}{gray}{0.95} %DIF > 
+\lstset{% general command to set parameter(s) %DIF > 
+	basicstyle=\small\ttfamily, % print whole listing small %DIF > 
+	keywordstyle=\color{BrickRed}\bfseries, %DIF > 
+	% underlined bold black keywords %DIF > 
+	identifierstyle=\color{Fuchsia}, % nothing happens %DIF > 
+	commentstyle=\color{Orange}\bfseries, % white comments %DIF > 
+	stringstyle=\color{OliveGreen}, % typewriter type for strings %DIF > 
+	showstringspaces=false} % no special string spaces %DIF > 
+\lstset{frameround=tttt,backgroundcolor=\color{LightGray},framesep=8pt,rulecolor=\color{Gray}} %DIF > 
+%DIF -------
+
+%% For citations
+%\usepackage{natbib}
+\usepackage[%
+% numberedbib,
+  natbibapa
+]{apacite} 
+
+%% Useful packages
+\usepackage{amsmath}
+\usepackage[colorinlistoftodos]{todonotes}
+\usepackage[colorlinks=false, allcolors=black]{hyperref}
+\def\tightlist{}
+
+\title{Geographical Python Teaching Resources: GeoPyTeR}
+\author{Jonathan Reades \and Sergio J. Rey}
+%\author{}
+%DIF PREAMBLE EXTENSION ADDED BY LATEXDIFF
+%DIF UNDERLINE PREAMBLE %DIF PREAMBLE
+\RequirePackage[normalem]{ulem} %DIF PREAMBLE
+\RequirePackage{color}\definecolor{RED}{rgb}{1,0,0}\definecolor{BLUE}{rgb}{0,0,1} %DIF PREAMBLE
+\providecommand{\DIFaddtex}[1]{{\protect\color{blue}\uwave{#1}}} %DIF PREAMBLE
+\providecommand{\DIFdeltex}[1]{{\protect\color{red}\sout{#1}}}                      %DIF PREAMBLE
+%DIF SAFE PREAMBLE %DIF PREAMBLE
+\providecommand{\DIFaddbegin}{} %DIF PREAMBLE
+\providecommand{\DIFaddend}{} %DIF PREAMBLE
+\providecommand{\DIFdelbegin}{} %DIF PREAMBLE
+\providecommand{\DIFdelend}{} %DIF PREAMBLE
+\providecommand{\DIFmodbegin}{} %DIF PREAMBLE
+\providecommand{\DIFmodend}{} %DIF PREAMBLE
+%DIF FLOATSAFE PREAMBLE %DIF PREAMBLE
+\providecommand{\DIFaddFL}[1]{\DIFadd{#1}} %DIF PREAMBLE
+\providecommand{\DIFdelFL}[1]{\DIFdel{#1}} %DIF PREAMBLE
+\providecommand{\DIFaddbeginFL}{} %DIF PREAMBLE
+\providecommand{\DIFaddendFL}{} %DIF PREAMBLE
+\providecommand{\DIFdelbeginFL}{} %DIF PREAMBLE
+\providecommand{\DIFdelendFL}{} %DIF PREAMBLE
+%DIF HYPERREF PREAMBLE %DIF PREAMBLE
+\providecommand{\DIFadd}[1]{\texorpdfstring{\DIFaddtex{#1}}{#1}} %DIF PREAMBLE
+\providecommand{\DIFdel}[1]{\texorpdfstring{\DIFdeltex{#1}}{}} %DIF PREAMBLE
+\newcommand{\DIFscaledelfig}{0.5}
+%DIF HIGHLIGHTGRAPHICS PREAMBLE %DIF PREAMBLE
+\RequirePackage{settobox} %DIF PREAMBLE
+\RequirePackage{letltxmacro} %DIF PREAMBLE
+\newsavebox{\DIFdelgraphicsbox} %DIF PREAMBLE
+\newlength{\DIFdelgraphicswidth} %DIF PREAMBLE
+\newlength{\DIFdelgraphicsheight} %DIF PREAMBLE
+% store original definition of \includegraphics %DIF PREAMBLE
+\LetLtxMacro{\DIFOincludegraphics}{\includegraphics} %DIF PREAMBLE
+\newcommand{\DIFaddincludegraphics}[2][]{{\color{blue}\fbox{\DIFOincludegraphics[#1]{#2}}}} %DIF PREAMBLE
+\newcommand{\DIFdelincludegraphics}[2][]{% %DIF PREAMBLE
+\sbox{\DIFdelgraphicsbox}{\DIFOincludegraphics[#1]{#2}}% %DIF PREAMBLE
+\settoboxwidth{\DIFdelgraphicswidth}{\DIFdelgraphicsbox} %DIF PREAMBLE
+\settoboxtotalheight{\DIFdelgraphicsheight}{\DIFdelgraphicsbox} %DIF PREAMBLE
+\scalebox{\DIFscaledelfig}{% %DIF PREAMBLE
+\parbox[b]{\DIFdelgraphicswidth}{\usebox{\DIFdelgraphicsbox}\\[-\baselineskip] \rule{\DIFdelgraphicswidth}{0em}}\llap{\resizebox{\DIFdelgraphicswidth}{\DIFdelgraphicsheight}{% %DIF PREAMBLE
+\setlength{\unitlength}{\DIFdelgraphicswidth}% %DIF PREAMBLE
+\begin{picture}(1,1)% %DIF PREAMBLE
+\thicklines\linethickness{2pt} %DIF PREAMBLE
+{\color[rgb]{1,0,0}\put(0,0){\framebox(1,1){}}}% %DIF PREAMBLE
+{\color[rgb]{1,0,0}\put(0,0){\line( 1,1){1}}}% %DIF PREAMBLE
+{\color[rgb]{1,0,0}\put(0,1){\line(1,-1){1}}}% %DIF PREAMBLE
+\end{picture}% %DIF PREAMBLE
+}\hspace*{3pt}}} %DIF PREAMBLE
+} %DIF PREAMBLE
+\LetLtxMacro{\DIFOaddbegin}{\DIFaddbegin} %DIF PREAMBLE
+\LetLtxMacro{\DIFOaddend}{\DIFaddend} %DIF PREAMBLE
+\LetLtxMacro{\DIFOdelbegin}{\DIFdelbegin} %DIF PREAMBLE
+\LetLtxMacro{\DIFOdelend}{\DIFdelend} %DIF PREAMBLE
+\DeclareRobustCommand{\DIFaddbegin}{\DIFOaddbegin \let\includegraphics\DIFaddincludegraphics} %DIF PREAMBLE
+\DeclareRobustCommand{\DIFaddend}{\DIFOaddend \let\includegraphics\DIFOincludegraphics} %DIF PREAMBLE
+\DeclareRobustCommand{\DIFdelbegin}{\DIFOdelbegin \let\includegraphics\DIFdelincludegraphics} %DIF PREAMBLE
+\DeclareRobustCommand{\DIFdelend}{\DIFOaddend \let\includegraphics\DIFOincludegraphics} %DIF PREAMBLE
+\LetLtxMacro{\DIFOaddbeginFL}{\DIFaddbeginFL} %DIF PREAMBLE
+\LetLtxMacro{\DIFOaddendFL}{\DIFaddendFL} %DIF PREAMBLE
+\LetLtxMacro{\DIFOdelbeginFL}{\DIFdelbeginFL} %DIF PREAMBLE
+\LetLtxMacro{\DIFOdelendFL}{\DIFdelendFL} %DIF PREAMBLE
+\DeclareRobustCommand{\DIFaddbeginFL}{\DIFOaddbeginFL \let\includegraphics\DIFaddincludegraphics} %DIF PREAMBLE
+\DeclareRobustCommand{\DIFaddendFL}{\DIFOaddendFL \let\includegraphics\DIFOincludegraphics} %DIF PREAMBLE
+\DeclareRobustCommand{\DIFdelbeginFL}{\DIFOdelbeginFL \let\includegraphics\DIFdelincludegraphics} %DIF PREAMBLE
+\DeclareRobustCommand{\DIFdelendFL}{\DIFOaddendFL \let\includegraphics\DIFOincludegraphics} %DIF PREAMBLE
+%DIF LISTINGS PREAMBLE %DIF PREAMBLE
+\RequirePackage{listings} %DIF PREAMBLE
+\RequirePackage{color} %DIF PREAMBLE
+\lstdefinelanguage{DIFcode}{ %DIF PREAMBLE
+%DIF DIFCODE_UNDERLINE %DIF PREAMBLE
+  moredelim=[il][\color{red}\sout]{\%DIF\ <\ }, %DIF PREAMBLE
+  moredelim=[il][\color{blue}\uwave]{\%DIF\ >\ } %DIF PREAMBLE
+} %DIF PREAMBLE
+\lstdefinestyle{DIFverbatimstyle}{ %DIF PREAMBLE
+	language=DIFcode, %DIF PREAMBLE
+	basicstyle=\ttfamily, %DIF PREAMBLE
+	columns=fullflexible, %DIF PREAMBLE
+	keepspaces=true %DIF PREAMBLE
+} %DIF PREAMBLE
+\lstnewenvironment{DIFverbatim}{\lstset{style=DIFverbatimstyle}}{} %DIF PREAMBLE
+\lstnewenvironment{DIFverbatim*}{\lstset{style=DIFverbatimstyle,showspaces=true}}{} %DIF PREAMBLE
+%DIF END PREAMBLE EXTENSION ADDED BY LATEXDIFF
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+Geopyter, an acronym of Geographical Python Teaching Resources, provides
+a hub for the distribution of `best practice' in computational and
+spatial analytic instruction; enabling instructors to quickly and
+flexibly remix contributed content to suit their needs and delivery
+framework; and encouraging contributors from around the world to `give
+back' whether in terms of how to teach individual concepts or deliver
+whole courses. As such, Geopyter is positioned at the confluence of two
+powerful streams of thought in software and education: the Free and Open
+Source Software (FOSS) movement in which contributors help to build
+better software, usually on an unpaid basis, in return for having access
+to better tools and the recognition of their peers); and the rise of
+Massive Open Online Courses (MOOCs), which seek to radically expand
+access to education by moving course content online and providing access
+to students anywhere in the world at little or no cost. This paper sets
+out in greater detail the origins and inspiration for Geopyter, the
+design of the system and, through examples, the types of innovative
+workflows that it enables for teachers. We believe that tools like
+Geopyter, which build on open teaching practices and promote the
+development of a shared understanding of what it is to \emph{be} a
+computational geographer represent an opportunity to expand the impact
+of this second wave of innovation in instruction while reducing the
+demands placed on those actively teaching in this area.
+\end{abstract}
+
+
+\section{Introduction}\label{introduction}
+
+Although \citet{Donoho2017} traces the origins of data science back to
+\citeauthor{Tukey1962}'s \DIFdelbegin \textit{\DIFdel{The future of data analysis}}
+%DIFAUXCMD
+\DIFdelend \DIFaddbegin \emph{\DIFadd{The future of data analysis}}
+\DIFaddend (\citeyear{Tukey1962}), \DIFdelbegin \DIFdel{its emergence has led to a flourishing of tools and
+programmes as universities seek to engage with this nascent---and
+lucrative---interdisciplinary field}\DIFdelend \DIFaddbegin \DIFadd{it is only recently that this set of previously disparate practices for working with large data sets has begun to be formalised in a way that might allow it to be taught in a university context instead of acquired on the job through `learning-by-doing'}\DIFaddend . One of the most profound practical impacts of this development has been on the ways in which developers share and execute code: although systems for combining code, commentary, and results have been around for some time (\eg R-Markdown) these were intended primarily for replicating research outputs, \DIFdelbegin \DIFdel{not for the online teaching of a new technique or
+writing of an interactive introduction to a software library. The `open' ethos
+and rapid growth of data science, and the need for a lightweight interactive
+code-sharing platform mean that teachers }\DIFdelend \DIFaddbegin \DIFadd{with teaching and interaction as secondary considerations. The emergence of data science---and the overall pace of change in the tools and programming libraries that it employs---gave new impetus to the search for lightweight ways of sharing code and documentation, and an interactive browser-based platform called Jupyter }\citep{kluyver16} \DIFadd{was the result.
+}
+
+\DIFadd{University educators }\DIFaddend in many disciplines are playing catch-up\DIFdelbegin \DIFdel{on both the methods taught and the formats used.
+}%DIFDELCMD < 
+
+%DIFDELCMD < %%%
+\DIFdel{As a discipline, geography has }\DIFdelend \DIFaddbegin \DIFadd{, but Geography---thanks to its long relationship with computation }\citep{ArribasBel2018}\DIFadd{---has }\DIFaddend been acutely aware of these developments: changes in the volume and extent of \DIFdelbegin \DIFdel{geographical }\DIFdelend \DIFaddbegin \DIFadd{spatial }\DIFaddend data available (\eg \citealp{Graham2013,gonzalez2013big,reades2016}), and in the number and range of methods employed to identify patterns in those data (\eg \citealp{Fan2016,Naik2017,Santibanez2015,Stevens2015,ArribasBel2017}), are allowing us to tackle questions thought unanswerable just a few years ago. At the same time, \DIFdelbegin \DIFdel{however, there is growing }\DIFdelend \DIFaddbegin \DIFadd{there is }\DIFaddend evidence of a `hollowing out' of \DIFdelbegin \DIFdel{traditional }\DIFdelend \DIFaddbegin \DIFadd{once }\DIFaddend domain-specific skills \DIFaddbegin \citep{Singleton2014,Singleton2016}\DIFaddend : most of what \DIFdelbegin \DIFdel{a trained geographer used to do
+with specialist }\DIFdelend \DIFaddbegin \DIFadd{used to be done with specialist Geographic Information Systems (}\textsc{\DIFadd{gis}}\DIFadd{) }\DIFaddend software can now be done using free online resources (\eg Google's Fusion Tables, MapBox, Carto, ArcOnline)\DIFdelbegin \DIFdel{, but }\DIFdelend \DIFaddbegin \DIFadd{. However, }\DIFaddend there remains unmet demand for graduates who can \DIFdelbegin \textit{\DIFdel{code}} %DIFAUXCMD
+\DIFdel{in order to take advantage of }\DIFdelend \DIFaddbegin \emph{\DIFadd{code}} \DIFadd{using }\DIFaddend the latest (geo)algorithms and techniques\DIFdelbegin %DIFDELCMD < \citep{Singleton2014,Singleton2016}%%%
+\DIFdelend \DIFaddbegin \DIFadd{, so in this article we present one means of bringing the benefits of (spatial) data science-approaches to instruction using Jupyter `notebooks' for the teaching of the Python programming language and geospatial analysis}\DIFaddend .
+
+\section{Statement of Need}
+
+Regardless of whether this is a revolution \citep{Wyly2014,Torrens2010} or an
+evolution \DIFdelbegin %DIFDELCMD < \citep{Barnes2013,Barnes2014,ArribasBel2018}%%%
+\DIFdelend \DIFaddbegin \citep{Barnes2013,Barnes2014}\DIFaddend , there is no question that teaching
+students and researchers how to code and how to \DIFdelbegin \textit{\DIFdel{think}}
+%DIFAUXCMD
+\DIFdel{computationally }\DIFdelend \DIFaddbegin \emph{\DIFadd{think}} \DIFadd{computationally }\citep{Barba_2015_bids} \DIFaddend presents new challenges \citep{Etherington2016,Muller2014,rey_09jgs} and that there is little in the way of a tradition of doing so to a high level within Geography (see surveys in \citealp{Bowlick2017,Bowlick2018}). Consequently, the majority of \DIFaddbegin \DIFadd{spatial data science and analytics }\DIFaddend resources used in the classroom are being developed from scratch at each institution, \DIFdelbegin \DIFdel{and }\DIFdelend often by newly-appointed lecturers and assistant professors coming from the relatively small number of elite research facilities active in this domain (see discussion in \citealp{esrc2013}). Not only has this led to the duplication of effort at multiple sites, but it \DIFdelbegin \DIFdel{has also had }\DIFdelend \DIFaddbegin \DIFadd{also has }\DIFaddend an enormous impact on the \DIFdelbegin \DIFdel{productivity---as
+commonly measured by institutions---of }\DIFdelend \DIFaddbegin \DIFadd{productivity of }\DIFaddend early career researchers, many of whom are in their first teaching post.
+
+The overarching purpose of this software is therefore to address two seemingly contradictory issues: the recognition that no two instructors teach in precisely the same way, and the fact that few instructors have the luxury of both time and tenure to develop compelling new course material in splendid isolation. This \DIFaddbegin \DIFadd{is  }\DIFaddend where the Geographical Python Teaching Resource (\textsc{g}eo\textsc{p}y\textsc{t}e\textsc{r}) comes into play: although developed with geographers in mind, it provides a generic means by which instructors in any discipline can selectively incorporate and re-mix programming and conceptual content from existing Jupyter notebooks while providing their own `gloss' for this content. Our approach therefore seeks to develop a \DIFdelbegin \DIFdel{richer, open
+}\DIFdelend \DIFaddbegin \DIFadd{rich }\DIFaddend community of developers and teachers who work \DIFdelbegin \textit{\DIFdel{together}} %DIFAUXCMD
+\DIFdelend \DIFaddbegin \emph{\DIFadd{together}} \DIFaddend on new teaching materials, \DIFdelbegin \DIFdel{and to support }\DIFdelend \DIFaddbegin \DIFadd{who make their output entirely }\emph{\DIFadd{open}} \DIFadd{to the wider community, and who }\emph{\DIFadd{support}} \DIFaddend instructors in quickly adapting existing materials to new delivery formats. 
+
+\section{Origins and Inspirations}\label{origins-and-inspirations}
+
+Like many open source projects, \gp grew out of a need to scratch an itch: in our roles as teachers of (geo)computational concepts and methods we grappled on an annual basis with the demands of developing and updating instructional material with complex interdependencies. And, while the fundamental computing and analytic concepts may remain fairly stable, the field is highly-dynamic in terms of both the content \DIFdelbegin \DIFdel{and the rate of evolution of new features in contributed code upon which we rely for functionality.
+Currently}\DIFdelend \DIFaddbegin \DIFadd{(\ie what should be in the curriculum) and the code (\ie how applications should be taught). Although, in principle, there should be little interaction between curriculum and code, in practice changes to software libraries can make certain connections much harder, or much easier, to establish in the mind of the learner. For instance, until the widespread adoption of }\texttt{\DIFadd{geopandas}} \DIFadd{in Python (which itself depended on the widespread adoption of }\texttt{\DIFadd{pandas}}\DIFadd{) it was common to find that each spatial analysis library had its own data structures}\footnote{\DIFadd{A similar effect could be seen in }\texttt{\DIFadd{R}} \DIFadd{with the }\texttt{\DIFadd{tidyverse}} \DIFadd{and }\texttt{\DIFadd{sftools}}\DIFadd{.}} \DIFadd{and, consequently, students needed to be taught to work with spatial data in different ways depending on the library. Consolidation around a single approach freed up a lot of `space' in the curriculum for teaching content, not format.
+}
+
+\DIFadd{In spite of this}\DIFaddend , every time a widely-used library \DIFdelbegin \DIFdel{package }\DIFdelend is updated a protracted sequence of revisions ensues \DIFdelbegin \DIFdel{: some teachers , pressed for time, may }\DIFdelend \DIFaddbegin \DIFadd{as teachers need to decide whether to }\DIFaddend resist making use \DIFdelbegin \DIFdel{of---or }\DIFdelend \DIFaddbegin \DIFadd{of, or }\DIFaddend even alerting students \DIFdelbegin \DIFdel{to---the new features ; others may }\DIFdelend \DIFaddbegin \DIFadd{to, the new features in order to save updating their materials, or whether to }\DIFaddend leap in enthusiastically \DIFdelbegin \DIFdel{,
+only to discover that they hadn't fully thought through the challenges of
+}\DIFdelend \DIFaddbegin \DIFadd{only to struggle with }\DIFaddend conflicting dependencies and \DIFdelbegin \DIFdel{evolving }\DIFdelend \DIFaddbegin \DIFadd{unstable }\DIFaddend feature sets. \DIFdelbegin %DIFDELCMD < 
+
+%DIFDELCMD < %%%
+\DIFdel{We }\DIFdelend \DIFaddbegin \DIFadd{But on the basis that `many hands makes light work', we }\DIFaddend initially explored with \DIFdelbegin \DIFdel{others---faculty with whom we regularly
+collaborate---the }\DIFdelend \DIFaddbegin \DIFadd{other faculty the }\DIFaddend potential to `divide and conquer': we would each focus on different topics \DIFaddbegin \DIFadd{using the latest codebase }\DIFaddend and then combine these contributions to create a full course. Though received with some enthusiasm, this plan did not survive contact with reality: first, when actually faced with the uncertain promise of receiving a full course in return for our \DIFaddbegin \DIFadd{individual }\DIFaddend efforts, many of us felt more secure developing our own material; second, we had underestimated the value that we each attach to the ability to personalise material to our own style of teaching. Since the shared materials were being developed \DIFdelbegin \DIFdel{individually according to the individual 's
+own }\DIFdelend \DIFaddbegin \DIFadd{according to individual }\DIFaddend `style', any rationalisation or personalisation would have to be done by the instructor at a later date\DIFdelbegin \DIFdel{and without support from the rest of the project}\DIFdelend .
+
+Going back to the drawing board, we looked again at our own experiences of successful programming and instructional efforts. In particular, we took note of two powerful streams of thought in software and education \DIFaddbegin \DIFadd{with which we already familiar}\DIFaddend : the importance attached by the Free and Open Source Software (\textsc{foss}) movement to both peer-recognition \citep{raymond_cathedral_1999} and distributed \DIFdelbegin \DIFdel{version }\DIFdelend control; and the rise of Virtual Learning Environments (\textsc{vle}s) and \DIFdelbegin \DIFdel{of }\DIFdelend Massive Open Online Courses (\textsc{mooc}s) with their use of rich, online learning experiences (\eg \citealp{Trafford2011,Cabiria2012}). Reflecting on our initial failure, we decided against trying to supply a single set of polished course materials and instead looked for a way to provide teachers with building blocks from which they could assemble an \DIFdelbegin \textit{\DIFdel{individualised}} %DIFAUXCMD
+\DIFdelend \DIFaddbegin \emph{\DIFadd{individualised}} \DIFaddend course suited to their institutional and pedagogical needs.
+
+We drew inspiration from the \DIFaddbegin \DIFadd{original }\DIFaddend \textsc{foss} iPython project \citep{perez_2007_ipython}\DIFdelbegin \DIFdel{and }\DIFdelend \DIFaddbegin \DIFadd{---expanded into the Jupyter project in 2016 }\citep{kluyver16}\DIFadd{---and }\DIFaddend its transformative impact on the sharing of integrated code, text, and multimedia resources. And we also looked to the Python Spatial Analysis Library (\textsc{p}y\textsc{sal}) project \DIFdelbegin \DIFdel{\mbox{%DIFAUXCMD
+\cite{rey_19sea}}\hspace{0pt}%DIFAUXCMD
+}\DIFdelend \DIFaddbegin \citep{rey_19sea} \DIFaddend in which contributors take ownership of \DIFaddbegin \DIFadd{particular }\DIFaddend application areas through managed collaboration instead of a contributory `free-for-all'. The subsequent \DIFdelbegin \DIFdel{emergence }\DIFdelend \DIFaddbegin \DIFadd{growth }\DIFaddend of the Jupyter project \DIFdelbegin \DIFdel{\mbox{%DIFAUXCMD
+\cite{kluyver16} }\hspace{0pt}%DIFAUXCMD
+from iPython has led to the rapid growth of }\DIFdelend \DIFaddbegin \DIFadd{has produced }\DIFaddend a rich ecosystem of tools \DIFdelbegin \DIFdel{that }\DIFdelend \DIFaddbegin \DIFadd{to }\DIFaddend support the kinds of interaction needed to make this an effective teaching resource: multiuser-notebooks (\DIFdelbegin \DIFdel{jupyterhub}\DIFdelend \DIFaddbegin \texttt{\DIFadd{jupyterhub}}\DIFaddend ), automation of grading (\DIFdelbegin \DIFdel{nbgrader}\DIFdelend \DIFaddbegin \texttt{\DIFadd{nbgrader}}\DIFaddend ), interactive widgets for visualisation (\DIFdelbegin \DIFdel{ipywidgets}\DIFdelend \DIFaddbegin \texttt{\DIFadd{ipywidgets}}\DIFaddend ), and packages to facilitate manipulation of the notebook itself (\DIFdelbegin \DIFdel{nbformat and notebook}\DIFdelend \DIFaddbegin \texttt{\DIFadd{nbformat}} \DIFadd{and }\texttt{\DIFadd{notebook}}\DIFaddend ).
+
+With these criteria and resources in mind, we began looking for ways to lower the `entry costs' for faculty to both take from, and share into, \DIFdelbegin \DIFdel{the }\DIFdelend \DIFaddbegin \DIFadd{a }\DIFaddend corpus of instructional material, as well as for a way to address the customisation/localisation challenge. \gp \DIFdelbegin \DIFdel{was }\DIFdelend \DIFaddbegin \DIFadd{is }\DIFaddend our solution: a single, open hub of \DIFaddbegin \DIFadd{geographically-focussed }\DIFaddend teaching concepts and practical programming tasks that can be flexibly assembled into classes, or entire courses! \DIFdelbegin \DIFdel{In the \gp approach we recognise }\DIFdelend \DIFaddbegin \DIFadd{\gp recognises }\DIFaddend that teachers need to be able to develop their own classroom `story' at their own pace (and in conformance with their institution's teaching \DIFdelbegin \DIFdel{pattern}\DIFdelend \DIFaddbegin \DIFadd{patterns}\DIFaddend ), while supporting them with a library of up-to-date materials from which they can pick and choose. So in much the same way that a computer application is compiled from the contributions of many developers, \gp allows individual classes and entire courses to be `compiled' from the contributions of many skilled teachers and developers. As such, this positions our work within contextualised programming initiatives \citep{Guzdial2010,Lukkarinen2016}\DIFaddbegin \DIFadd{, }\DIFaddend of which the CS+X approach is perhaps best-known \DIFdelbegin %DIFDELCMD < \citep[][\eg]{Mir2017}%%%
+\DIFdelend \DIFaddbegin \citep[\eg][]{Mir2017}\DIFaddend ; however, \gp represents \DIFdelbegin \DIFdel{a significant }\DIFdelend \DIFaddbegin \DIFadd{an important }\DIFaddend advance in this area since it not only builds in context at the level of individual modules, but at the level of \DIFdelbegin \DIFdel{a shared set of }\DIFdelend teaching resources as well!
+
+\DIFaddbegin \DIFadd{Without realising it, we were plugging into a larger framework of thinking emerging from the literature on Open Educational Resources (}\textsc{\DIFadd{oer}}\DIFadd{), which began as largely `legal and economic concept' designed to support royalty and license free access to educational resources }\citep{butcher2010open}\DIFadd{. It should be clear from this definition that there is no }\emph{\DIFadd{necessary}} \DIFadd{link to }\textsc{\DIFadd{foss}} \DIFadd{since a free e-book can qualify as an }\textsc{\DIFadd{oer}}\DIFadd{. However, these two areas are conceptually aligned in many ways, not least through their shared interest in the `4 Rs': reuse, redistribution, revision, and remixing }\citep{Hilton2010}\DIFadd{. Within \mbox{%DIFAUXCMD
+\citeauthor{du2017}}\hspace{0pt}%DIFAUXCMD
+'s }\citeyearpar{du2017} \textsc{\DIFadd{oer}} \DIFadd{typology \gp is clearly `open courseware', but it is conceptually distinct from }\textsc{\DIFadd{mit}}\DIFadd{'s eponymous OpenCourseWare or Standford's Coursera since it is designed to promote what \mbox{%DIFAUXCMD
+\citeauthor{Ehlers2011} }\hspace{0pt}%DIFAUXCMD
+calls `Open Educational Practice' }\citeyearpar{Ehlers2011} \DIFadd{in a manner not altogether dissimilar to that the Geographic Science \& Technology Body of Knowledge }\citep{bok2018}\DIFadd{.
+}
+
+\DIFadd{In line with }\citet{Mishra2017} \DIFadd{and with \mbox{%DIFAUXCMD
+\citeauthor{Knox2013}}\hspace{0pt}%DIFAUXCMD
+'s }\citeyearpar{Knox2013} \DIFadd{call for a role for pedagogy in }\textsc{\DIFadd{oer}}\DIFadd{, \gp envisions an essential role for `teachers as (co)creators': they not only have an active role in selecting components for a Session or Module, they can contribute source material as well. The educator and section editors, of which more later, may therefore also use this process to extend their own understanding in an applied workplace setting through collaboration (see }\citealp{littlejohn2017} \DIFadd{and }\citealp{eraut2008} \DIFadd{for relevant discussions). Of course, we must also recognise that under \mbox{%DIFAUXCMD
+\citeauthor{Wiley2009}}\hspace{0pt}%DIFAUXCMD
+'s }\citeyearpar{Wiley2009} \textsc{\DIFadd{alms}} \DIFadd{typology, although \gp provides direct Access to editing tools, is Meaningfully editable, and offers Source-file access, the Level of expertise required is not insubstantial though we also expect instructors in this domain to be more comfortable than most with the process. We therefore believe that \gp is unique in incorporating the instructor's domain expertise and pedagogical strategies by design. 
+}
+
+\DIFaddend \section{System Architecture}\label{system-architecture}
+
+At least in our experience, the pace of technological and methodological change \DIFaddbegin \DIFadd{in spatial data science }\DIFaddend is such that the gap between what instructors know and what students know is substantial, and in many cases might even be growing. \DIFdelbegin \DIFdel{The }\DIFdelend \DIFaddbegin \DIFadd{But the }\DIFaddend differences within individual student cohorts may be greater still, \DIFdelbegin \DIFdel{however, and while students
+}\DIFdelend \DIFaddbegin \DIFadd{and instructors }\DIFaddend need to be able to \DIFdelbegin \DIFdel{begin their learning `journey' at some arbitrary point in the
+progression from `learning to code' towards `computational social scientist'
+}%DIFDELCMD < \citep{Lazer2009}%%%
+\DIFdel{, instructors require the ability to assemble }\DIFdelend \DIFaddbegin \DIFadd{quickly assemble and update }\DIFaddend a course that meets students where they \emph{are} rather than where the instructor or institution might \emph{wish} them to be. At the same time, there is also a strong need to support more open-ended exploration during `practicals' \citep{Unwin1980}, particularly by more advanced students who may `tune out' if \DIFdelbegin \DIFdel{the means of }\DIFdelend progression is overly structured and rigid\DIFaddbegin \DIFadd{\ldots or just too slow to keep their attention}\DIFaddend .
+
+The guiding insight behind \gp is that instruction in \DIFdelbegin \DIFdel{computation }\DIFdelend \DIFaddbegin \DIFadd{programming outside of Computer Science }\DIFaddend proceeds from fundamental units of learning typically built around \DIFdelbegin \textit{\DIFdel{computing}} %DIFAUXCMD
+\DIFdelend \DIFaddbegin \emph{\DIFadd{computing}} \DIFaddend concepts (variables, lists/arrays, dictionaries/hashes, functions/subroutines, etc.) to fundamental units of learning built around \DIFdelbegin \textit{\DIFdel{analytic}} %DIFAUXCMD
+\DIFdelend \DIFaddbegin \emph{\DIFadd{analytic}} \DIFaddend concepts (cluster analysis, point patterns, spatial autocorrelation, etc.). These units must then be assembled in a way that speaks to the student cohort and its background; we mean this in two ways: first, that the examples used must \DIFaddbegin \DIFadd{be domain-specific in order to }\DIFaddend speak to budding geographers, political scientists, historians, etc.; and second, that it should be possible to develop courses for different \DIFaddbegin \DIFadd{types of }\DIFaddend cohorts without having to start over from scratch. In other words, how can we enable teachers to reuse many of the building blocks employed in an advanced course for Masters students in an introductory \DIFdelbegin \DIFdel{undergraduate course }\DIFdelend \DIFaddbegin \DIFadd{course for Undergraduates}\DIFaddend ?
+
+\subsection{Components}\label{components}
+
+From these constraints it was clear that our system needed to support a \DIFaddbegin \DIFadd{compositional, }\DIFaddend `bottom-up' approach to instructional design. So although the development of a course or class \DIFdelbegin \DIFdel{could---and probably should---start }\DIFdelend \DIFaddbegin \DIFadd{should obviously start out }\DIFaddend with a clear set of learning aims and outcomes, at a certain point the instructor will be searching for \DIFdelbegin \DIFdel{a
+examples }\DIFdelend \DIFaddbegin \DIFadd{examples and code }\DIFaddend with which to teach a particular concept: What \emph{is} a list or dictionary? What \DIFdelbegin \DIFdel{is }\textit{\DIFdel{k}}%DIFAUXCMD
+\DIFdelend \DIFaddbegin \emph{\DIFadd{is}} \emph{\DIFadd{k}}\DIFaddend -means clustering? We settled on the term `Atoms' to refer to these basic instructional units and, much like entries in the atomic table, we felt that they could be grouped together into sets of related concepts: the fundamentals of programming, point pattern analysis, machine learning, etc.
+
+\DIFdelbegin \DIFdel{Each atom }\DIFdelend \DIFaddbegin \begin{table}[htbp]
+\centering
+\caption{\DIFaddFL{Overview of System Components}}
+\label{table:1}
+\begin{tabularx}{0.6\textwidth}{sb}
+ \toprule
+ \textbf{\DIFaddFL{Concept}} & \textbf{\DIFaddFL{Usage}} \\
+ \midrule
+ \DIFaddFL{Atom  }& \DIFaddFL{A `teachable idea' combining explanation and code for a core, typically singular, concept (\eg Variables, Lists, Projections, Robust Rescaling\ldots). }\\
+ \DIFaddFL{Sessions  }& \DIFaddFL{A `teachable unit' combining }\textbf{\DIFaddFL{multiple atoms}} \DIFaddFL{for delivery in a particular learning context (\eg Beginner Lab-based Course, Intermediate Flipped Module, Online Course\ldots) }\\
+ \DIFaddFL{Modules  }& \DIFaddFL{A }\textbf{\DIFaddFL{sequence of sessions}} \DIFaddFL{designed to achieve one or more pedagogical objective and/or required for credit in a particular education context. }\\
+\bottomrule 
+\end{tabularx}
+\end{table}
+
+\DIFadd{Each Atom }\DIFaddend would employ \emph{domain-specific} illustrative examples and code so as to anchor learning in \DIFdelbegin \DIFdel{relevant }\DIFdelend problems and applications \DIFdelbegin \DIFdel{. An atom on arrays
+written for geographers }\DIFdelend \DIFaddbegin \DIFadd{relevant to the learner}\footnote{\DIFadd{\gp is intended for Geography and Planning students, but could quite easily be `forked' to provide a similar set of domain-specific resources for economics, sociology, or literature students.}}\DIFadd{. An Atom }\DIFaddend could start by showing how \DIFdelbegin \DIFdel{these simple data structures
+}\DIFdelend \DIFaddbegin \DIFadd{a list }\DIFaddend can be used to hold data about cities (\eg name, country, population)\DIFdelbegin \DIFdel{; but a subsequent unit }\DIFdelend \DIFaddbegin \DIFadd{, and a subsequent set of `cells' (the basic `unit' of Jupyter a notebook) }\DIFaddend could build on this with an an illustration of how \DIFdelbegin \DIFdel{nested data
+structures allow }\DIFdelend \DIFaddbegin \DIFadd{a list-of-lists allows }\DIFaddend us to add \DIFdelbegin \DIFdel{city location using nested coordinate pairs (\eg
+}\DIFdelend \DIFaddbegin \DIFadd{location as a }\DIFaddend latitude and longitude \DIFdelbegin \DIFdel{within an array-of-arrays). This is why managed
+collaboration around sets of related concepts is so important: quite aside from
+the fact that no }\textsc{\DIFdel{foss}} %DIFAUXCMD
+\DIFdel{project succeeds without some level of executive
+control, it's critical that }\textit{\DIFdel{someone}} %DIFAUXCMD
+\DIFdel{is responsible for }\DIFdelend \DIFaddbegin \DIFadd{coordinate pair. We will return to some of the issues that this approach raises in }\nameref{sec:engagement}\DIFadd{, but it points to the importance of }\DIFaddend ensuring a degree of consistency in how the \DIFdelbegin \DIFdel{units fit together within }\DIFdelend \DIFaddbegin \DIFadd{Atoms for }\DIFaddend a set of closely-related topics \DIFaddbegin \DIFadd{fit together}\DIFaddend . 
+
+The purpose of the bottom-up approach is that these units can then be flexibly assembled into Sessions: from the \DIFdelbegin \textit{\DIFdel{same ingredients}} %DIFAUXCMD
+\DIFdel{(\ie atoms}\DIFdelend \DIFaddbegin \emph{\DIFadd{same ingredients}} \DIFadd{(\ie Atoms}\DIFaddend ) the instructor could create \DIFdelbegin \DIFdel{two quite different modules---one for delivery in
+person, one for delivery online---by organising }\DIFdelend \DIFaddbegin \DIFadd{quite different modules by organising and presenting }\DIFaddend the elements in different ways. Quite simply, we don't want to have to rewrite material for each format \DIFdelbegin \DIFdel{:
+}\DIFdelend \DIFaddbegin \DIFadd{(\eg }\DIFaddend lecture/practical, `flipped' classroom, or \DIFdelbegin \textsc{\DIFdel{mooc}}%DIFAUXCMD
+\DIFdel{. 
+}\DIFdelend \DIFaddbegin \DIFadd{distance learning), but we also need to deal with the fact that different types of scaffolding are required and that the amount of content suitable to a `class' in each of these formats might differ substantially. 
+}
+
+\DIFaddend Furthermore, sessions designed for experts (\eg those pursuing continuing online education) might be able to `move' students through many more \DIFdelbegin \DIFdel{atoms }\DIFdelend \DIFaddbegin \DIFadd{Atoms }\DIFaddend of instruction in a single \DIFdelbegin \DIFdel{session }\DIFdelend \DIFaddbegin \DIFadd{Session }\DIFaddend than a similarly laid out \DIFdelbegin \DIFdel{(in terms of time) session }\DIFdelend \DIFaddbegin \DIFadd{on }\DIFaddend designed for first-time programmers in an undergraduate programme. So \DIFdelbegin \DIFdel{sessions }\DIFdelend \DIFaddbegin \DIFadd{Sessions }\DIFaddend need to be able to \emph{incorporate} \DIFdelbegin \DIFdel{atoms }\DIFdelend \DIFaddbegin \DIFadd{Atoms }\DIFaddend in a way that minimises the level of effort involved in finding the `best' way to, for example, explain the concept of recursion while maximising the ability of the instructor to relate this concept to the students' practical experience (\eg by providing a `context' that is anchored in a locally relevant `story' or data).
+
+Naturally, Sessions can then be grouped into Learning Modules \DIFdelbegin \DIFdel{(modules) }\DIFdelend that offer a coherent instructional programme over a period of weeks or months. Modules represent the highest level of abstraction in the proposed system, but they are also obviously the starting point from which instructors can organise their (remixed) atomic and sessional material into something incorporating a set of learning outcomes and a package of assessment appropriate to their students. However, our design reflects the expectation that contributions to \gp at each \emph{level} of instruction might be made by \emph{different} people: a domain expert in Spatial Bayes might be the right person to develop an Atom on the concept and its application, but not the right person to develop a module tackling advanced spatial analytic concepts where this is just one approach amongst many. Similarly, given the global diversity of delivery formats, a 10-week term in Britain enables students to cover a very different `volume' of content from a 15-week American semester. \gp recognises and seeks to respond to that diversity\DIFdelbegin \DIFdel{at all levels}\DIFdelend .
+
+\subsection{Tools}\label{tools}
+
+So we are trying to design a system in which \DIFdelbegin \DIFdel{sessions and modules }\DIFdelend \DIFaddbegin \DIFadd{Sessions and Modules }\DIFaddend are \emph{composed} out of \DIFdelbegin \DIFdel{atomic units of instruction }\DIFdelend \DIFaddbegin \DIFadd{Atoms }\DIFaddend that can be, optionally, surrounded by the instructor's own `narrative'\DIFdelbegin \DIFdel{or supported by more locally
+relevant (geo)data}\DIFdelend . We therefore want to produce a set of teaching materials that are highly portable, easily re-used or edited, and that enable the instructor to select only the elements from which they wish to compose their materials. As intimated above, \gp operationalises this through the Jupyter project and its ability to provide in-browser access to the Python interpreter\footnote{Other languages are also possible using different kernels; there is no reason that \gp couldn't be used to create instructional materials in these languages as well.}, and it also takes advantage of the dominance of \DIFdelbegin \DIFdel{Git and GitHub for version control as a means for }\DIFdelend \DIFaddbegin \DIFadd{the Git version control tool---and the GitHub service/web site---as a means of }\DIFaddend tracking authorship across \DIFdelbegin \DIFdel{many versions and changes}\DIFdelend \DIFaddbegin \DIFadd{edits}\DIFaddend .
+
+In theory, thanks to the combination of Jupyter and GitHub is not even necessary
+for the novice user to have Python installed on their own computer: since all
+interaction with Python is via the browser, the environment could be hosted on a
+server halfway round the world. In practice, however, there are few such
+services and most users simply download and install a free version of Python
+(\eg Anaconda) that will run on their system. In our field many people are
+already using this approach: notebooks can be found covering everything from
+introductory concepts \citep{millington_reades_2017_code} to advanced spatial
+analysis methods \citep{darribas_gds15}, and combined for both complete courses
+or workshops \citep{rey_2016_narsc}.
+
+Jupyter notebooks are written as a mix of executable code cells and non-executable text formatted with the widely-used `markdown' syntax. Notebook structure is provided through headers in markdown cells: a `\#' pre-pended to a line of text is generally taken to be the title of the notebook; `\#\#' at the start of a line provides a second level of structure (\ie \DIFdelbegin \DIFdel{level }\DIFdelend \DIFaddbegin \DIFadd{Level }\DIFaddend 2 headers); `\#\#\#' indicates \DIFdelbegin \DIFdel{level }\DIFdelend \DIFaddbegin \DIFadd{Level }\DIFaddend 3 headers; etc. For our purposes, what's relevant is that these headers \DIFdelbegin \DIFdel{yield a natural }\DIFdelend \DIFaddbegin \DIFadd{naturally yield a semantic }\DIFaddend hierarchy that corresponds closely to the h1\ldots{}h6 model used by the HTML markup language that lies at the heart of the World Wide Web. This hierarchy allows us to `abstract out' the problem of inferring the \emph{meaning} of \DIFaddbegin \DIFadd{cells in }\DIFaddend different sections of the notebook since the instructor does it for us \DIFaddbegin \DIFadd{through their use of headers}\DIFaddend .
+
+\DIFdelbegin \DIFdel{Notebooks are actually stored in a format called JavaScript Object Notation
+(}\textsc{\DIFdel{json}}%DIFAUXCMD
+\DIFdel{) that is not particularly easy for most humans to read, but as it
+is nonetheless highly-structured we can interact with it programmatically. The
+extensible nature of the }\textsc{\DIFdel{json}} %DIFAUXCMD
+\DIFdel{format also allows us to read and write
+both data and metadata not only to each notebook, but also to each and every
+sub-element of a notebook. Since metadata that is not understood by Jupyter is
+simply ignored, we can add our own fields to provide useful information related
+to instruction: the amount of time that the notebook's examples and content
+might take to cover in class; who should be given credit for contributing; any
+dependencies or requirements for installed libraries\ldots
+}%DIFDELCMD < 
+
+%DIFDELCMD < %%%
+\DIFdel{In short, within the notebook we have two types of structure that can be used
+not only to provide information that may assist course instructors in developing
+content, but also to uniquely specify a section, subsection, or sub-subsection
+of content (code or text) at a fine-grained level. Taken together, this provides
+the foundation for a mechanism to select content in one notebook and import it
+into another. This therefore creates an opportunity to remix/mash up content
+while still being able to add an institutional or course-specific gloss wherever
+necessary. Each notebook might start with the instructor's contact information
+or by providing instructions for setting up the computing environment, but then
+make use of material developed by others for actual instruction. This process
+may seem quite abstract---and probably quite convoluted as well---but an
+illustration (Figure \ref{fig:Illustration} }%DIFDELCMD < \vpageref[above]{fig:Illustration}%%%
+\DIFdel{)
+may help to clarify why this process is so useful.
+}%DIFDELCMD < 
+
+%DIFDELCMD < \begin{figure}[hbtp]
+%DIFDELCMD <   \centering
+%DIFDELCMD <   \includegraphics[width=\textwidth, angle=0]{Illustration.pdf}
+%DIFDELCMD <   %%%
+%DIFDELCMD < \caption{%
+{%DIFAUXCMD
+\DIFdelFL{Illustration of \gp Notebook `Compilation' Process}}
+  %DIFAUXCMD
+%DIFDELCMD < \label{fig:Illustration}
+%DIFDELCMD < \end{figure}
+%DIFDELCMD < 
+
+%DIFDELCMD < %%%
+\DIFdel{Finally, in order to manage all of this output we make use of Git and the GitHub
+web platform to monitor, approve, and roll back alterations to any submitted
+revisions to \gp Atoms , Sessions , or Modules. This provides additional
+capabilities such as allowing an instructor to `fix' their course to a
+particular version of an Atom (a `release' or `tag' in Git) such that
+development of the Atom by others can continue without the instructor having to
+worry that the explanation or code upon which they rely will suddenly change!
+Git also gives us the contributor information that we can propagate into
+compiled notebooks so that credit is retained, and users and institutions can
+better-understand the extent to which \gp is a }\emph{\DIFdel{joint}} %DIFAUXCMD
+\DIFdel{project relying on
+the contributions of many teachers and developers.
+}%DIFDELCMD < 
+
+%DIFDELCMD < %%%
+\subsection{\DIFdel{Syntax}}%DIFAUXCMD
+\addtocounter{subsection}{-1}%DIFAUXCMD
+%DIFDELCMD < \label{syntax}
+%DIFDELCMD < %%%
+\DIFdelend \DIFaddbegin \subsection{\DIFadd{Approach}}
+\DIFaddend 
+
+\DIFdelbegin \DIFdel{The final element of \gp is necessarily a syntax for specifying how Sessions and
+Modules should be compiled from Atoms}\DIFdelend \DIFaddbegin \DIFadd{In order to assemble Atoms into Sessions and Modules, \gp necessarily requires a compositional syntax}\DIFaddend . We've noted the \DIFdelbegin \DIFdel{technical mechanism, as
+well as the }\DIFdelend \DIFaddbegin \DIFadd{conceptual }\DIFaddend mapping between markdown and \textsc{html} formatting \DIFdelbegin \DIFdel{, above}\DIFdelend \DIFaddbegin \DIFadd{above, }\DIFaddend but how do we select some mix of code and markdown material in one notebook to be incorporated into another? And how do we do this in a way that is both simple to express and able to resolve ambiguity? Fortunately, such a model already exists and was hinted at in Figure \DIFdelbegin \DIFdel{\ref{fig:Illustration}}\DIFdelend \DIFaddbegin \DIFadd{\ref{fig:structure}}\DIFaddend : Cascading Style Sheets (\textsc{css}) uses well-understood `selectors' to specify one or more elements on a web page to which a set of presentational styles should be applied\DIFdelbegin \DIFdel{: }\DIFdelend \DIFaddbegin \DIFadd{. 
+}
+
+\DIFadd{In }\textsc{\DIFadd{css}} \DIFaddend an `h1' in a style sheet indicates that all \DIFdelbegin \DIFdel{level }\DIFdelend \DIFaddbegin \textsc{\DIFadd{html}} \DIFadd{Level }\DIFaddend 1 \DIFdelbegin \DIFdel{headers }\DIFdelend \DIFaddbegin \DIFadd{Headers (\eg }\texttt{\DIFadd{<h1>A Title</h1>}}\DIFadd{) }\DIFaddend should observe the styling rules declared immediately afterwards; while `h1.important' specifies that only a \DIFdelbegin \DIFdel{level }\DIFdelend \DIFaddbegin \DIFadd{Level }\DIFaddend 1 \DIFdelbegin \DIFdel{header }\DIFdelend \DIFaddbegin \DIFadd{Header }\DIFaddend of the class `important' should be selected \DIFdelbegin \DIFdel{. More powerfully, `h1.important a.super' selects }\emph{\DIFdel{only}} %DIFAUXCMD
+\DIFdel{anchors of the class `super' that
+fall `within' (or `under', if you prefer') a level }\DIFdelend \DIFaddbegin \DIFadd{(\eg }\texttt{\DIFadd{<h1 class="important">A Title</h1>}}\DIFadd{) and all other Level }\DIFaddend 1 \DIFdelbegin \DIFdel{header of the `important'
+class .
+}%DIFDELCMD < 
+
+%DIFDELCMD < %%%
+\DIFdelend \DIFaddbegin \DIFadd{headers ignored (\eg }\texttt{\DIFadd{<h1 class="unimportant">A Title</h1>}}\DIFadd{). In fact, }\textsc{\DIFadd{css}} \DIFadd{also allows for nested selectors in which `child' element(s) of a `parent' can be selected in turn. This is normally used to do things like specify mouseover behaviours for a menu: that all anchors (\ie links) that are within a division of class }\texttt{\DIFadd{menu}} \DIFadd{should act in }\emph{\DIFadd{this}} \DIFadd{way when the mouse passes over them (\eg }\texttt{\DIFadd{div.menu a.hover}}\DIFadd{). }\DIFaddend What is particularly elegant about \DIFdelbegin \DIFdel{this approach }\DIFdelend \DIFaddbegin \textsc{\DIFadd{css}} \DIFaddend is that it provides a means for selecting \DIFdelbegin \DIFdel{and styling }\DIFdelend multiple pieces of content in the document in one declaration (where this is desirable) \DIFdelbegin \textit{\DIFdel{and}} %DIFAUXCMD
+\DIFdelend \DIFaddbegin \emph{\DIFadd{and}} \DIFaddend a means for disambiguating content with the same name but in different \DIFdelbegin \DIFdel{positions }\DIFdelend \DIFaddbegin \DIFadd{locations }\DIFaddend within a document \DIFdelbegin \DIFdel{'s
+hierarchical structure }\DIFdelend \DIFaddbegin \DIFadd{hierarchy }\DIFaddend (where it is not). 
+\DIFdelbegin \DIFdel{We }\DIFdelend \DIFaddbegin 
+
+\DIFadd{Conceptually, \gp adapts this syntax to allow us to select some or all of a Jupyter notebook using the structure imparted by the instructor: all cells coming after a Level 1 Header are considered to be part of that element's semantic field until another Level 1 Header is encountered or the end of the document is encountered, whichever comes first. And a Level 2 Header coming `after' (a `child', if you prefer) a Level 1 Header is considered part of that `parent' element's semantic field, }\emph{\DIFadd{but}} \DIFadd{we can select it uniquely within the notebook using the standard }\textsc{\DIFadd{css}} \DIFadd{form of }\texttt{\DIFadd{h1.content h2.subcontent}}\DIFadd{. This is illustrated in schematic form in Figure \ref{fig:structure}, but note that the }\texttt{\DIFadd{>}} \DIFadd{is simply make clear the hierarchical relationship. With this, we }\DIFaddend have essentially repurposed \textsc{css} as a means of selecting and importing content from one notebook into another!
+\DIFaddbegin 
+
+\begin{figure}[htbp]
+  \centering
+  \caption{\DIFaddFL{Illustration of a single Atom's Structure}}
+  \includegraphics[width=0.5\textwidth]{Single_Document.pdf}
+  \label{fig:structure}
+\end{figure}
+
+\DIFaddend Unfortunately, the nature of Jupyter notebooks does not allow this to happen dynamically at run-time, but it does allow something similar to happen when an instructor is `compiling' new Sessional and Module content. In short, the instructor writes whatever content they wish but, using syntax similar to the examples below, wherever they want to incorporate contributed content from \gp (or elsewhere) they have only to \DIFdelbegin \DIFdel{write an }\DIFdelend `include' \DIFdelbegin \DIFdel{statement to select and import sections of another notebook. This approach also }\DIFdelend \DIFaddbegin \DIFadd{it by specifying both a source and a selection. And this approach }\DIFaddend works recursively: a notebook can include content from a notebook that itself includes content from another notebook\DIFdelbegin \DIFdel{\ldots
+}\DIFdelend \DIFaddbegin \DIFadd{.
+}\subsection{\DIFadd{Syntax}}\label{syntax}
+\DIFaddend 
+
+\DIFdelbegin \DIFdel{Adopting the language used above: we }\DIFdelend \DIFaddbegin \DIFadd{To recap, we typically }\DIFaddend envision an Atom as a short notebook focussing on a \DIFdelbegin \DIFdel{single }\DIFdelend \DIFaddbegin \DIFadd{core }\DIFaddend concept or method (\eg lists, object-oriented design, or spatial autocorrelation); some or all of each Atom can then be selected and imported into a Session, which is itself a notebook; and the sessions can then be selected and managed through a Module, which can \DIFaddbegin \emph{\DIFadd{also}} \DIFaddend be a notebook or a set of notebooks. This process is initiated by the instructor creating a blank text cell in a Jupyter notebook and writing an `include' statement. The statement should be the \DIFdelbegin \textit{\DIFdel{only}} %DIFAUXCMD
+\DIFdelend \DIFaddbegin \emph{\DIFadd{only}} \DIFaddend content in the cell since \gp will be replacing the cell with an unknown number of whole text and code cells from the referenced notebook.
+
+Crucially, \DIFdelbegin \DIFdel{`include' }\DIFdelend \DIFaddbegin \texttt{\DIFadd{include}} \DIFaddend statements can be freely intermingled with the instructor's own content \DIFaddbegin \DIFadd{(as shown in Figure \ref{fig:include}}\DIFaddend , allowing the instructor to `frame' the concepts in a way that suits their teaching style but which saves them having to reinvent the wheel for each class. A Session tackling standardisation could include elements of the relevant Atom from \gp while still allowing the instructor to interject comments, observations, questions, and additional tasks to ground the learning experience in the local context (individual, institutional, etc.). To illustrate this more clearly, an Atom on Python's approach to dealing with lists could be incorporated into a longer Session as follows:
+
+\DIFdelbegin %DIFDELCMD < \begin{Verbatim}[fontsize=\small]
+%DIFDELCMD < %%%
+\DIFdel{@include }%DIFDELCMD < {
+%DIFDELCMD <     %%%
+\DIFdel{'nb'     = 'http://geopyter.org/atoms/fundamentals/lists.ipynb',
+    'select' = 'h1.Understanding Lists'
+}%DIFDELCMD < }
+%DIFDELCMD < \end{Verbatim}
+%DIFDELCMD < %%%
+\DIFdelend \DIFaddbegin \begin{figure}
+	\centering 
+	\caption{\DIFaddFL{Illustrative Jupyter notebook content}}
+	\label{fig:include}
+\DIFmodbegin
+\begin{lstlisting}[language=HTML,frame=single,alsolanguage=DIFcode]
+%DIF > # Session 2: Lists
+%DIF > 
+%DIF > Module leader: Associate Prof. X
+%DIF > Contact information: prof.x@foo.bar.uk
+\end{lstlisting}
+\DIFmodend	
+\DIFmodbegin
+\begin{lstlisting}[language=Python,frame=single,alsolanguage=DIFcode]
+%DIF > @include {
+%DIF >     'nb'     = 'http://geopyter.org/atoms/fundamentals/lists.ipynb',
+%DIF >     'select' = 'h1.Lists'
+%DIF > }
+\end{lstlisting}
+\DIFmodend
+\DIFaddendFL 
+
+\DIFdelbeginFL \DIFdelFL{The `nb' is the }\DIFdelendFL \DIFaddbeginFL \DIFmodbegin
+\begin{lstlisting}[language=HTML,frame=single,alsolanguage=DIFcode]
+%DIF > ## All Done?
+%DIF > 
+%DIF > For next week please read the following: ...
+\end{lstlisting}
+\DIFmodend
+
+\end{figure}
+
+\DIFadd{Here, }\texttt{\DIFadd{nb}} \DIFadd{is a }\DIFaddend path---local or remote---to a valid Jupyter notebook from which the \DIFdelbegin \DIFdel{Session or Module developer }\DIFdelend \DIFaddbegin \DIFadd{instructor }\DIFaddend wants to import content. The \DIFdelbegin \DIFdel{`select' }\DIFdelend \DIFaddbegin \texttt{\DIFadd{select}} \DIFaddend parameter specifies a selector for which the \gp tool will search within the source notebook. All content from that point onwards \emph{up to the next selector at the same level} will the then be copied into the compiled notebook. In \DIFaddbegin \DIFadd{the }\DIFaddend example above, if there were a following \DIFdelbegin \DIFdel{h1 }\DIFdelend \DIFaddbegin \texttt{\DIFadd{h1}} \DIFaddend covering, for example, `List Operators' then this would \emph{not} be included because, from a structural standpoint, it is \DIFdelbegin \DIFdel{of equal importance (}\DIFdelend at the same level in the hierarchy \DIFdelbegin \DIFdel{) to `Understanding
+}\DIFdelend \DIFaddbegin \DIFadd{as `}\DIFaddend Lists' but has \emph{not} been selected. Furthermore, any \DIFdelbegin \DIFdel{h2 or h3 }\DIFdelend \DIFaddbegin \texttt{\DIFadd{h2}} \DIFadd{or }\texttt{\DIFadd{h3}} \DIFaddend subsections within the `\DIFdelbegin \DIFdel{Understanding }\DIFdelend Lists' section \DIFdelbegin \textit{\DIFdel{would}} %DIFAUXCMD
+\DIFdelend \DIFaddbegin \emph{\DIFadd{would}} \DIFaddend be included since they are presumed to be providing pedagogical and logical structure to the \DIFdelbegin \DIFdel{Understanding }\DIFdelend Lists section and so should be carried over.
+
+Clearly, an instructor might want to import only part of of a section, or to suppress a subsection falling in the middle of a larger resource. In anticipation of this need \DIFdelbegin \DIFdel{, }\DIFdelend more complex `include' statements with no equivalent in \textsc{css} are also possible:
+\DIFdelbegin %DIFDELCMD < 
+
+%DIFDELCMD < %%%
+\DIFdelend \begin{Verbatim}[fontsize=\small]
+@include {
+    'resource' = 'http://geopyter.org/atoms/fundamentals/lists.ipynb',
+    'select' = 'h1.\DIFdelbegin \DIFdel{Understanding }\DIFdelend Lists -h3.Lists Example; h1.\DIFdelbegin \DIFdel{Using Lists -h3.Another Example}\DIFdelend \DIFaddbegin \DIFadd{List Operators -h2.Concatenation}\DIFaddend '
+}
+\end{Verbatim}
+\DIFdelbegin %DIFDELCMD < 
+
+%DIFDELCMD < %%%
+\DIFdelend In this second example, two \DIFdelbegin \DIFdel{level }\DIFdelend \DIFaddbegin \DIFadd{Level }\DIFaddend 1 section are imported at the same time \DIFdelbegin \DIFdel{(the
+selections are separated with semi-colons) and a level }\DIFdelend \DIFaddbegin \DIFadd{and a Level }\DIFaddend 3 subsection from \emph{within} each of those sections is suppressed using the `-' syntax to indicate that the section should be removed. \DIFdelbegin \DIFdel{An additional }\DIFdelend \DIFaddbegin \DIFadd{We diverged from the }\textsc{\DIFadd{css}} \DIFadd{standard since that selectors are not separated with commas: we wanted to allow for this punctuation to be part of a section heading and felt that semi-colons are rather more rare in that context. An additional point of }\DIFaddend difference from true \textsc{css} is that we allow spaces in the `selector' because we felt that asking teachers to translate between a natural language header (``\DIFdelbegin \DIFdel{Understanding
+Lists}\DIFdelend \DIFaddbegin \DIFadd{List Operators}\DIFaddend '') and what \textsc{css} would consider a safe header (``\DIFdelbegin \DIFdel{Understanding\_Lists}\DIFdelend \DIFaddbegin \DIFadd{List\_Operators}\DIFaddend '') would detract from ease-of-use.
+\DIFdelbegin \DIFdel{A second departure
+from the }\DIFdelend \DIFaddbegin 
+
+\subsection{\DIFadd{Putting it All Together}}
+
+\DIFadd{Jupyter notebooks use a format called JavaScript Object Notation (}\DIFaddend \textsc{\DIFdelbegin \DIFdel{css}\DIFdelend \DIFaddbegin \DIFadd{json}\DIFaddend }\DIFdelbegin \DIFdel{standard is that selectors are not separated with commas:
+we wanted to allow for this punctuation to be part of a section heading and felt
+that semi-colons are rather more rare in that context}\DIFdelend \DIFaddbegin \DIFadd{) that is not particularly easy for most humans to read, but as it is nonetheless highly-structured we can interact with it programmatically. The extensible nature of the }\textsc{\DIFadd{json}} \DIFadd{format also allows us to read and write both data and metadata not only to each notebook, but also to each and every cell in a notebook. Since metadata that is not understood by Jupyter is simply ignored, we can add our own fields to provide useful information related to instruction such as who should be given credit for contributing and any dependencies or requirements for installed libraries.
+}
+
+\DIFadd{Taken together, this provides the foundation for remixing/mashing up content while still enabling to add an institutional or course-specific gloss wherever necessary. Each notebook might start with the instructor's contact information or by providing instructions for setting up the computing environment, but then make use of material developed by others for actual instruction. This process may seem quite abstract---and probably quite convoluted as well---but an illustration (Figure \ref{fig:compiling} }\vpageref[below]{fig:compiling}\DIFadd{) may help to clarify why this process is so useful}\DIFaddend .
+
+\DIFaddbegin \begin{figure}[hbtp]
+  \centering
+  \caption{\DIFaddFL{Illustration of \gp Notebook `Compilation' Process}}
+  \label{fig:compiling}
+  \includegraphics[width=\textwidth, angle=0]{Multiple_Documents.pdf}
+\end{figure}
+
+\DIFaddend \section{Use Cases}\label{uses}
+
+\DIFdelbegin \DIFdel{Two }\DIFdelend \DIFaddbegin \DIFadd{To illustrate how this approach offers a substantively new way to think about teaching programming material more generally, we here present two schematic }\DIFaddend use-cases: an online module of eight sessions, and an in-person module lasting one semester\DIFdelbegin \DIFdel{might serve to further illustrate how this approach offers
+a substantively new way to think about teaching programming material more
+generally}\DIFdelend \DIFaddbegin \DIFadd{. It's important to stress that we envision }\emph{\DIFadd{both}} \DIFadd{of these modules being built out of the same Atoms and that, because they are drawing from version-controlled source code, the content can be fixed on a particular release (\ie version)}\DIFaddend .
+
+\subsection{\DIFdelbegin \DIFdel{An Online }\DIFdelend \DIFaddbegin \DIFadd{Distance Learning }\DIFaddend Module}\label{an-online-module}
+
+There has been increasing interest at universities in Massive Open Online Courses, or \textsc{mooc}s, as vehicles for expanding access to higher education through online delivery. For \DIFdelbegin \DIFdel{HE managers }\DIFdelend \DIFaddbegin \DIFadd{managers in Higher Education (}\textsc{\DIFadd{he}}\DIFadd{)}\DIFaddend , the \textsc{mooc} promises both enhanced \DIFdelbegin \DIFdel{revenue---depending on the model this implies either more people paying
+to take the modules or more paying for a certificate of completion at the
+end---and enhanced access as people who would be unable to attend the university
+in person are nonetheless able to pursue a degree}\DIFdelend \DIFaddbegin \DIFadd{revenue and enhanced access to underserved groups}\DIFaddend . Our own experience suggests substantial student interest in `computational social science' \citep{Lazer2009}, with international students being the most keen on such modules as they are seen to provide marketable skills (programming) for graduates from a discipline (geography) with generally high employment rates (see\DIFaddbegin \DIFadd{: }\DIFaddend \citeauthor{rgs2017} \citeyear{rgs2017}).
+
+\DIFdelbegin \DIFdel{Whatever the motivation, while expanding access to , and enrolment by, students is probably a `good thing', the process for developing a new online module or
+`converting'an existing face-to-face module to an online format remains far
+from easy. Typically, this step requires significant effort and investment by
+both the instructor and their institution: all course materials need to be
+online, recordings/videos of the lecturer presenting a key concept need to be
+made, the sessions need to be `chunked' so that a 3-hour practical becomes
+something more manageable, and assessments often need to be substantively
+redesigned}\DIFdelend \DIFaddbegin \DIFadd{Associate Professor X wishes to offer a }\emph{\DIFadd{Foundations of Spatial Data Science}} \DIFadd{module to second year undergraduates, but anticipates high demand exceeding her capacity to teach in  a computer cluster and high attrition since many students will decide that programming is `not for them'. Consequently, the decision is made to offer this module on a distance-learning basis with pre-recorded video content and other rich media to support student learning. However, the `remote desktop' environment that will support this module is only updated every 18 months, often in the middle of term}\DIFaddend .
+
+\gp significantly reduces the overhead of several of these stages: rather than focussing on tasks such as how to explain or illustrate a particular concept, the instructor can focus \DIFdelbegin \DIFdel{the }\emph{\DIFdel{majority}} %DIFAUXCMD
+\DIFdel{of their effort on constructing the type of richer, fuller narrative that }\textsc{\DIFdel{mooc}}%DIFAUXCMD
+\DIFdel{s seem to require to engage
+students working remotely. If the instructor isn't there to ask questions and probe student learning on the spot, then the `frame' for each session (as well
+as for the module as a whole) becomes crucial as it helps to anchor student
+learning in concrete outcomes and encourages them to reflect upon, and
+integrate, their progress over the self-guided learning process}\DIFdelend \DIFaddbegin \DIFadd{on developing the multimedia content. The similarity between learning to code and learning a language is noted, and each `lesson' is designed to be completed in under an hour so that students can proceed at their own pace without being overwhelmed. As well, using Git tags Prof. X can `fix' the version of the code and explanations used to one that is appropriate to the computing environment while continuing to update her teaching materials}\DIFaddend .
+
+\subsection{In-Class Delivery}\label{in-class-delivery}
+
+\DIFdelbegin \DIFdel{In a more traditional in-person format}\DIFdelend \DIFaddbegin \DIFadd{Associate Professor X }\emph{\DIFadd{also}} \DIFadd{teaches a module for Masters students that follows the more traditional lecture+practical format. Although these students are also new to programming, they have already completed a required }\textsc{\DIFadd{gis}} \DIFadd{module. Here}\DIFaddend , \gp could be employed differently: since the instructor is able to interactively provide the `frame' or `scaffold' (see relevant discussion of `hypermedia' in \citealp{Azevedo2008}) upon which the learning is built, there is less need for a narrative around each task or weekly session. 
+\DIFdelbegin \DIFdel{Here, the instructor might simply import a group of atoms to cover a set of concepts and step through them interactively }\DIFdelend \DIFaddbegin 
+
+\DIFadd{The instructor might therefore simply import the same group of Atoms as above,
+but use a Session and Module template that leaves out the rich media and more
+detailed explanations since these will be discussed in-class }\DIFaddend with the students.
+The \DIFdelbegin \DIFdel{session could }\DIFdelend \DIFaddbegin \DIFadd{Sessions then }\DIFaddend wrap up with \DIFdelbegin \DIFdel{a targeted project }\DIFdelend \DIFaddbegin \DIFadd{an additional mini-project }\DIFaddend or mini-assessment
+that requires the students to translate the concepts into a new problem domain
+or investigate the process in more detail: \DIFdelbegin \emph{\DIFdel{e.g.}} %DIFAUXCMD
+\DIFdelend ``we've seen how we can use
+\DIFdelbegin \DIFdel{pandas and bokeh to analyse }\DIFdelend \DIFaddbegin \texttt{\DIFadd{pandas}} \DIFadd{and }\texttt{\DIFadd{bokeh}} \DIFadd{to explore and compare the distribution of
+}\DIFaddend demographic groups in London, here's a link to \DIFdelbegin \DIFdel{the open data store page for Phoenixwith similar data\ldots{}'' or ``Do you think that
+socioeconomic class is a useful metric? Investigate the source of the data we've
+just used and see if it squares with your expectations\ldots{}''}\DIFdelend \DIFaddbegin \DIFadd{equivalent open data for Phoenix,
+Arizona\ldots{}''.}\footnote{\DIFadd{Interactive examples that demonstrate these use
+  cases are available on-line at }\url{https://mybinder.org/v2/gh/pysal/geopyter/master}\DIFadd{.}}
+\DIFaddend 
+
+In \DIFdelbegin \DIFdel{effect, courses built on top of \gp become mash-ups, with the author able to mix and match atoms as needed for the module objectives, time available, and level of student. Both sessions and modules are built via composition: atoms are
+composed into sessions, sessions into modules. The }\DIFdelend \DIFaddbegin \DIFadd{addition, since students are working on their own machines, the instructor can update to the latest-and-greatest much more rapidly. To enable Professor X to manage these competing requirements, we make use of Git and the GitHub web platform not only to monitor, approve, and roll back alterations to any submitted revisions, but also to provide release `tags' to which an instructor can bind a particular instance of a Session or Module. This `fixes' their course to a particular version of an Atom such that development of the Atom by others can continue without the instructor having to worry that the explanation or code upon which they rely will suddenly change! 
+}
+
+\section{\DIFadd{Engagement}}\label{sec:engagement}
+
+\DIFadd{In effect, in both of the example use cases the }\DIFaddend role of the instructor is \DIFdelbegin \DIFdel{then }\DIFdelend to provide an integrative narrative that \DIFdelbegin \DIFdel{, in a sense, explains }\DIFdelend \DIFaddbegin \DIFadd{guides the students and contextualises }\DIFaddend their choice of components. \DIFdelbegin \DIFdel{In both the online and offline contexts we }\DIFdelend \DIFaddbegin \DIFadd{We }\DIFaddend think that this has the potential to free up instructors to \DIFdelbegin \DIFdel{concentrate }\DIFdelend \DIFaddbegin \DIFadd{focus }\DIFaddend on where they can most effectively `add value'\DIFdelbegin \DIFdel{, not in figuring out }\DIFdelend \DIFaddbegin \DIFadd{; not in developing }\DIFaddend yet \emph{another} way to \DIFdelbegin \DIFdel{explain
+}\DIFdelend \DIFaddbegin \DIFadd{show }\DIFaddend how a list or dictionary works, but in explaining why they matter to a geography, political science, or literature major \DIFaddbegin \DIFadd{(see }\citealp{Bort2015} \DIFadd{for an application in literature)}\DIFaddend .
+
+\DIFdelbegin \section{\DIFdel{Engagement}}%DIFAUXCMD
+\addtocounter{section}{-1}%DIFAUXCMD
+%DIFDELCMD < \label{engagement}
+%DIFDELCMD < 
+
+%DIFDELCMD < %%%
+\DIFdel{Because }\DIFdelend \DIFaddbegin \DIFadd{And because }\DIFaddend it builds on \textsc{foss} approaches to software development, we expect \gp to benefit from network effects: the more people use it, the more useful it becomes, and the more people use it. \DIFdelbegin \DIFdel{In common with many such projects we }\emph{\DIFdel{do}} %DIFAUXCMD
+\DIFdel{expect that }\DIFdelend \DIFaddbegin \DIFadd{The open source, peer-generated approach is also, however, likely to present something of a challenge over time: as more people seek both to use and to contribute to \gp we would expect to see the emergence and use of divergent norms, examples, and data across Atoms, Sessions, and Modules. Although the emergence of difference styles of coding is actually quite natural in programming and could be seen as a benefit to students in terms of teaching them about this aspect of programming, it also the case that \gp could become a victim its own success if it ceases to be coherent.
+}
+
+\subsection{\DIFadd{Coordination}}
+
+
+\DIFadd{Here we believe that the \pysal project offers a useful template. Although \pysal is a }\textsc{\DIFadd{foss}} \DIFadd{project, it is }\emph{\DIFadd{not}} \DIFaddend a \DIFdelbegin \DIFdel{relatively small subset of users will contribute the
+majority of the content; however}\DIFdelend \DIFaddbegin \DIFadd{free-for-all: domain specialists tend to gravitate towards those parts of the project to which they have the most to contribute and, over time, those who coordinate and enable the most substantive contributions to the codebase in terms of features and performance are `invited' to help manage individual components of the tool (\eg }\texttt{\DIFadd{lib}}\DIFadd{, }\texttt{\DIFadd{model}}\DIFadd{, }\texttt{\DIFadd{explore}}\DIFadd{, }\texttt{\DIFadd{viz}}\DIFadd{). Overall coherence is maintained via regular calls and online discussion boards, as well as a synchronised release schedule so that changes can be coordinated, tested, and knock-on effects resolved.
+}
+
+\begin{table}[hbtp]
+\centering
+\caption{\DIFaddFL{Indicative Groups of Atoms}}
+\label{table:2}
+\begin{tabularx}{0.6\textwidth}{sb}
+ \toprule
+ \textbf{\DIFaddFL{Atomic Group}} & \textbf{\DIFaddFL{Indicative Content}} \\
+ \midrule
+	\texttt{\DIFaddFL{auto}} & \DIFaddFL{Approaches to spatial autocorrelation analysis. }\\
+	\texttt{\DIFaddFL{context}} & \DIFaddFL{Why learn to program? Example applications. Interviews. }\\
+	\texttt{\DIFaddFL{networks}} & \DIFaddFL{Working with network data and costs. }\\ 
+	\texttt{\DIFaddFL{describe}} & \DIFaddFL{Simple descriptive statistics.  }\\
+	\texttt{\DIFaddFL{statistics}} & \DIFaddFL{More advanced methods of comparing data. }\\
+	\texttt{\DIFaddFL{clustering}} & \DIFaddFL{Non-spatial and spatial clustering analysis. }\\
+	\texttt{\DIFaddFL{foundations}} & \DIFaddFL{Foundations of programming and Computer Science. }\\
+	\texttt{\DIFaddFL{os}} & \DIFaddFL{Basic aspects of interacting with Operating Systems programmatically. }\\
+	\texttt{\DIFaddFL{viz}} & \DIFaddFL{Visualising data and making maps. }\\
+	\texttt{\DIFaddFL{ml}} & \DIFaddFL{Approaches to Machine Learning in a spatial context. }\\ 
+	\texttt{\DIFaddFL{points}} & \DIFaddFL{Point pattern generation and analysis. }\\ 
+	\texttt{\DIFaddFL{zones}} & \DIFaddFL{Zonal statistics and relationship. }\\
+	\texttt{\DIFaddFL{models}} & \DIFaddFL{From regression to }\textsc{\DIFaddFL{gwr}}\DIFaddFL{. }\\
+\bottomrule 
+\end{tabularx}
+\end{table}	
+
+\DIFadd{In general, we would expect to see a relatively small number of committed educators and developers creating and maintaining groups of Atoms that align with their areas of expertise, interests, and teaching responsibilities. However}\DIFaddend , unlike a traditional software project there is an important role \DIFaddbegin \DIFadd{here }\DIFaddend for \emph{teachers}, not just \DIFdelbegin \DIFdel{highly-skilled }\emph{\DIFdel{developers}}
+%DIFAUXCMD
+\DIFdel{and we }\DIFdelend \DIFaddbegin \DIFadd{developers. We }\DIFaddend think that this represents a really exciting opportunity for innovative new approaches to rise to the surface. There may be only a few who can write the Python code to conduct a Geographically-Weighted Regression analysis, but it will be interesting to see how many creative, insightful ways there are to explain it! 
+
+\DIFdelbegin \DIFdel{\gp also acknowledges the reality of the need for peer and professional
+recognition by incorporating attribution mechanisms through which faculty can be
+credited for their work. Contributors can be recognised as the author of content
+elements through a Digital Object Identifier (}\textsc{\DIFdel{doi}}%DIFAUXCMD
+\DIFdel{), and The \gp team
+would also include section editorsresponsible for the curation of atoms and for
+maintenance of official \gp }\textsc{\DIFdel{doi}}%DIFAUXCMD
+\DIFdel{s.
+Instructors who use \gp to compose
+sessions or courses can also contribute those modules back to the project and would also be recognised as the author of record in a similar fashion.
+Authorship of \gp educational components, be they atoms, sessions or modules, provides the contributors with peer-evaluated, impactful materials to add to their promotion applications. }\DIFdelend \DIFaddbegin \DIFadd{So although we also expect interested educators to begin almost immediately picking holes in the organisational structure proposed in Table \ref{table:2}, some kind of starting point is needed. Moreover, as we've mentioned elsewhere, in the event of serious disagreement other instructors are free `fork' the repository and begin changing material as they see fit. Indeed, there is nothing to prevent \gp Sessions and Modules drawing on content spread across multiple repositories following different organisational and developmental strategies: all that's need is a }\textsc{\DIFadd{url}}\DIFadd{!
+}
+
+\DIFadd{The educational focus of \gp implies that it may well be the most committed teachers who end up as `section editors' who coordinate and review contributions. The editorial approach also aligns with the obvious benefits of grouping sets of Atoms together into basic sections such as }\texttt{\DIFadd{foundations}} \DIFadd{(the basics of variables and data structures); }\texttt{\DIFadd{describe}} \DIFadd{(describing data); etc. The section editor ensures that examples, style, and other features are consistent across individual Atoms to make it easy to generate a set of Sessions introducing the Unix file system or Local Indicators of Spatial Autocorrelation.
+}
+
+\DIFadd{\gp therefore seeks to balance the benefits of code-sharing with those of local expertise: the instructor is free to write their own exegesis, if you will, of the code and its relevance to a particular Session or Module, but the burden of developing a cogent, domain-specific demonstration can be shared with others and compelling examples more widely adopted without the effort of reinventing the wheel. Where irreconcilable differences arise between pedagogical approaches or models, then we might expect to see small groups of collaborators `fork' the codebase and offer their own models; this is, of course, a valid approach with open source code and one from which all instructors can ultimately benefit!
+}
+
+\subsection{\DIFadd{Credit}}
+\DIFaddend 
+
+\DIFaddbegin \DIFadd{The use of Git/GitHub also gives us access to contributor information in the `commit' (\ie editing) logs that we can propagate into notebooks so that all contributors are recognised in the final output. }\DIFaddend Although the open \DIFdelbegin \DIFdel{source }\DIFdelend nature of the project means that we cannot strictly enforce attribution, \gp seeks to make this the easier to do `by default' through the \DIFdelbegin \DIFdel{use of Git to track and insert contributory }\DIFdelend \DIFaddbegin \DIFadd{insertion of }\DIFaddend metadata into the compiled notebook \DIFdelbegin \DIFdel{. We can use this metadata }\DIFdelend \DIFaddbegin \DIFadd{which is then used }\DIFaddend to append a list of contributors to the end of each notebook, along with any other relevant acknowledgments or copyright notices.
+\DIFaddbegin 
+
+\DIFaddend To facilitate re-use while protecting contributions from unacknowledged exploitation textual content in \gp is covered by a Creative Commons license; however, to deal with the fact that \gp relies extensively on open source contributions which are incompatible with some \textsc{cc} licenses \citep[see discussion in][]{osswatch2013}, code blocks are licensed under the \textsc{mit} license. The manner in which contributions from authors at different institutions can be combined also `pollutes' the materials in ways that inhibit institutional assertions of ownership over \gp content.
+
+\DIFaddbegin \DIFadd{\gp also recognises the reality of the need for peer and professional recognition by incorporating attribution mechanisms directly into the compilation process. Digital Object Identifiers (}\textsc{\DIFadd{doi}}\DIFadd{s) can be created and curated by the `section editors', but authorship of \gp components---be they Atoms, Sessions or Modules---provides the contributors with peer-evaluated, impactful materials to add to promotion applications. Our intention is that both users and institutions come to better-understand the extent to which open educational resources can be a }\emph{\DIFadd{joint}} \DIFadd{project relying on the contributions of many teachers and developers.
+}
+
+\DIFaddend \section{Limitations}\label{limitations}
+
+\DIFdelbegin \DIFdel{Although we are profoundly excited both by the possibility of shifting to compositional approaches to content-development, and by the impact that shared
+materials could have on our teaching}\DIFdelend \DIFaddbegin \DIFadd{As we noted above in connection with Table \ref{table:2}}\DIFaddend , it is \DIFdelbegin \DIFdel{highly }\DIFdelend \DIFaddbegin \DIFadd{rather }\DIFaddend unlikely that our first attempt to divide up the entire field into discrete units of instruction will be entirely successful. \DIFdelbegin \DIFdel{For this, it will be useful to }\DIFdelend \DIFaddbegin \DIFadd{We would also expect to draw on }\DIFaddend reference documents such as the \DIFdelbegin \textit{\DIFdel{Body of Knowledge}} %DIFAUXCMD
+\DIFdelend \DIFaddbegin \emph{\DIFadd{Body of Knowledge}} \DIFaddend \citep{bok2018} and \DIFdelbegin \textit{\DIFdel{Subject Benchmark
+Statement}} %DIFAUXCMD
+\DIFdelend \DIFaddbegin \emph{\DIFadd{Subject Benchmark Statement}} \DIFaddend \citep{QAA2014} for the `why' and `what' of instruction, leaving \gp to deal with the `how'. Moreover, the open\DIFdelbegin \DIFdel{source}\DIFdelend , contributory nature of the project positions us to build \gp on top of the shared understanding of many specialists with a range of ideas about how to break \DIFdelbegin \DIFdel{apart---and put back together---the }\DIFdelend \DIFaddbegin \DIFadd{apart, and put back together, the }\DIFaddend constituent elements of our domain\DIFaddbegin \DIFadd{'s  }\DIFaddend knowledge in ways that speak to different types of students.
+
+For the time being we have also deliberately hobbled \gp in one important way: an \texttt{include} command must be in a cell that does not contain any other text or code. This was done primarily for simplicity: it's a lot easier to look for whole (text) cells that match a target pattern than to have to try to parse long blocks of text or code on the off-chance that \DIFdelbegin \DIFdel{something might match}\DIFdelend \DIFaddbegin \DIFadd{an }\texttt{\DIFadd{include}} \DIFadd{might be found}\DIFaddend ; it also avoids any ambiguity as to whether the \texttt{include} is a \gp \DIFdelbegin \DIFdel{command or `real' code as might happen, for instance, if \gp were used with a different
+programming language}\DIFdelend \DIFaddbegin \DIFadd{or `native' command}\DIFaddend . Not coincidentally, it is also a good deal easier to \DIFdelbegin \DIFdel{know
+that you are replacing an entire block }\DIFdelend \DIFaddbegin \DIFadd{replace an entire cell }\DIFaddend (the one \DIFdelbegin \DIFdel{with an include}\DIFdelend \DIFaddbegin \DIFadd{containing an }\texttt{\DIFadd{include}}\DIFaddend ) with one or more entire \DIFdelbegin \DIFdel{blocks that are a mix of text and code, than trying }\DIFdelend \DIFaddbegin \DIFadd{cells, than to try }\DIFaddend to work out \DIFdelbegin \DIFdel{whether the block in which an include was found }\DIFdelend \DIFaddbegin \DIFadd{if a cell }\DIFaddend needs to be `closed out' \DIFdelbegin \DIFdel{before
+the import starts}\DIFdelend \DIFaddbegin \DIFadd{first}\DIFaddend .
+
+\section{Conclusion \& Future Directions}\label{future}
+
+From practical experience, conference presentations, and code we tend to already know who is a good \emph{programmer} or \emph{theorist}, \gp provides a mechanism for discovering who is a good \emph{teacher}. Sometimes these abilities may reside in the same person, but more often we expect that they will not: the strongest developers tend to be people who have been practicing software development for many years and, consequently, may have difficulty communicating their ideas to beginner- or intermediate-level students \DIFdelbegin \DIFdel{(or teachers !). }\DIFdelend \DIFaddbegin \DIFadd{or teachers (see: }\citealp{Chapman:2010aa}\DIFadd{)! }\DIFaddend For this reason we see the broad-based community-of-practice aspect of \gp as integral at all stages of the project: system enhancement, content development, expanding coverage, and instructional design.
+
+Consequently, \gp has a lot in common---both philosophically and practically---with the Software Carpentry movement \citep{SCF2016}, and although we seek to tackle a slightly narrower set of issues with a more re-usable set of resources, we can take both inspiration and warning from their experience. The benefit, we think, is that while it is possible to design \DIFdelbegin \DIFdel{\gp sessions and modules }\DIFdelend \DIFaddbegin \DIFadd{Sessions and Modules }\DIFaddend that follow the popular `bootcamp' approach to instruction (though see critique in \citealp{Feldon2017}), we want to enable the \DIFdelbegin \textit{\DIFdel{same}} %DIFAUXCMD
+\DIFdelend \DIFaddbegin \emph{\DIFadd{same}} \DIFaddend content to be employed in a \DIFdelbegin \DIFdel{flexible }\DIFdelend carpentry format as well as a `normal' classroom or \textsc{mooc} as required\ldots Or even to enable the instructor to mash all of those formats together such that they use a `bootcamp' format for the introduction to Unix and the command line, an online-formatted \DIFdelbegin \DIFdel{\gp }\DIFdelend resource for foundational concepts in computer science, and a traditional course format for the (geo)data analysis instruction. All pulled from the same \DIFdelbegin \DIFdel{source}\DIFdelend \DIFaddbegin \DIFadd{set of source Atoms}\DIFaddend !
+
+Ultimately, although \gp was developed with teaching needs in mind there is, of course, no reason why it couldn't be put to other uses: in combination with with \texttt{nteract} (\url{https://github.com/nteract/nteract}) it would allow developers or researchers to build fully-fledged applications as scripts assembled from a collection of notebooks; or as an addition to Netflix's notebook ecology to allow for enhanced resource-sharing and standardisation during the development phase before features and interfaces are `fixed' as libraries \citep{Ufford2018}. Nonetheless, our focus for the time being remains the cohort of \DIFaddbegin \DIFadd{university }\DIFaddend teachers at all levels tasked with introducing programming material to their students and wondering where to begin. We hope that \gp makes a valuable contribution to this application domain and look forward to working with others to roll out a rich, reusable teaching framework.
+
+\bibliographystyle{apacite}
+\bibliography{Geopyter.bib}
+
+\end{document}
