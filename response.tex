@@ -1,0 +1,427 @@
+% LaTeX rebuttal letter example. 
+% 
+% Copyright 2019 Friedemann Zenke, fzenke.net
+%
+% Based on examples by Dirk Eddelbuettel, Fran and others from 
+% https://tex.stackexchange.com/questions/2317/latex-style-or-macro-for-detailed-response-to-referee-report
+% 
+% Licensed under cc by-sa 3.0 with attribution required.
+% See https://creativecommons.org/licenses/by-sa/3.0/
+% and https://stackoverflow.blog/2009/06/25/attribution-required/
+
+\documentclass[11pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage{lipsum} % to generate some filler text
+\usepackage{fullpage}
+\usepackage[colorlinks=false, allcolors=black]{hyperref}
+
+% import Eq and Section references from the main manuscript where needed
+% \usepackage{xr}
+% \externaldocument{manuscript}
+
+% package needed for optional arguments
+\usepackage{xifthen}
+% define counters for reviewers and their points
+\newcounter{reviewer}
+\setcounter{reviewer}{0}
+\newcounter{point}[reviewer]
+\setcounter{point}{0}
+
+% This refines the format of how the reviewer/point reference will appear.
+\renewcommand{\thepoint}{P\,\thereviewer.\arabic{point}} 
+
+% command declarations for reviewer points and our responses
+\newcommand{\reviewersection}{\stepcounter{reviewer} \bigskip \hrule
+                  \section*{Reviewer \thereviewer}}
+
+\newenvironment{point}
+   {\refstepcounter{point} \bigskip \noindent {\textbf{Reviewer~Point~\thepoint} } ---\ }
+   {\par }
+
+\newcommand{\shortpoint}[1]{\refstepcounter{point}  \bigskip \noindent 
+	{\textbf{Reviewer~Point~\thepoint} } ---~#1\par }
+
+\newenvironment{reply}
+   {\medskip \noindent \begin{sf}\textbf{Reply}:\  }
+   {\medskip \end{sf}}
+
+\newcommand{\shortreply}[2][]{\medskip \noindent \begin{sf}\textbf{Reply}:\  #2
+	\ifthenelse{\equal{#1}{}}{}{ \hfill \footnotesize (#1)}%
+	\medskip \end{sf}}
+
+
+
+\begin{document}
+
+
+\section*{Response to the editor}
+
+Dear Serge and Jon,
+
+Many thanks for your paper submitted in response to the invitation to contribute to the special issue on Open Software for Spatial Science. I have received three reviewer reports now. At this point, I am sending the paper back to you with an invitation to make revisions.
+
+For your information, the reviewers' comments can be found at the end of this email or can be accessed by following the provided link.
+
+Your revision is due by 09 Mar 2020. That said, two papers for the special issue came in later than the rest, so there is some flexibility with the due date.
+  
+
+\begin{reply}
+  Thank you, and the reviewers, for the careful evaluation of our revised manuscript.
+
+  We find the points raised are most helpful in strengthening the contribution of this work, and below we detail the changes we made in response to each point. Following these points, we have included a marked-up version that shows the
+  detailed changes in the manuscript.
+
+  We feel that the substantial revision has resulted in a significantly improved
+  paper, and we are grateful for the opportunity to revise this work.
+
+\end{reply}
+\pagebreak
+\section*{Response to the reviewers}
+% General intro text goes here
+We thank the reviewers for their critical assessment of our work. 
+In the following we address their concerns point by point. 
+
+% Let's start point-by-point with Reviewer 1
+\reviewersection
+The paper presents some details on Geopyter, a hub for the distribution of contents in computational and spatial analytic instruction. It shows the design of the system and explains the types of innovative workflows that it enables for lecturers. I believe the effort is very promising and having the paper to both explain and advertise the initiative is worthy of publication by JGSY. However, I believe there are some points that can improve the contribution of the paper, as follows.
+
+
+\begin{point}
+On page 4, line 21, please write in full the acronym MOOC.
+\end{point}
+\begin{reply}
+  Although MOOC had been defined earlier, we have changed to just 'online course'.
+\end{reply}
+
+\begin{point}
+On page 5, the authors try to explain what they call Atoms, Sessions and Modules. The differentiation between these is however not very clear at this point. I suggest maybe adding a box to better explain what each of these elements is and how they differ. \end{point}
+\begin{reply}
+A small table has been created to outline the relationship between these elements.
+\end{reply}
+
+\begin{point}
+On page 6, line 45, the paper explains how to select only parts of an Atom. The example with 'a.super' doesn't really deliver a good explanation, since it is not really clear what this class is. A more extensive example may be more helpful. 
+
+\end{point}
+
+\begin{reply}
+We have rewritten this section substantially so that it is more clear to the reader and added a figure to try to illustrate what we mean \textbf{before} we get to the more complicated representation further on.
+\end{reply}
+
+
+\begin{point}
+Actually, to have a full Jupyter notebook as an example, with print-screens may be a good idea to achieve the objective of addressing the "the cohort of teachers at all levels" (p.11). On page 7, the authors present an example of how to include an Atom in a Session. However, for a teacher at a beginner level, it may not be clear where/how that code is supposed to be inserted. Hence, I believe having a full notebook as example would really be more helpful to achieve the beginner level of teachers. In my opinion, this is the greatest weakness of the paper: not showing a full example that can be used by beginners to build upon it and from there start creating their own Sessions with a mixing approach as proposed by the authors. I strongly suggest the addition of a full example to the paper. 
+
+\end{point}
+
+\begin{reply}
+A working repository has been created with useable content illustrating two of the potential applications for Geopyter. However, our feeling is that including full Python/Jupyter code here would be confusing.
+\end{reply}
+
+
+\begin{point}
+The url used for the include examples takes the reader to a BlueHost advertising page. The authors should change it. 
+
+\end{point}
+
+\begin{reply} The repository for the source code is on
+\url{https://github.com/pysal/geopyter}. A live version of geopyter can be
+accessed at \url{https://mybinder.org/v2/gh/pysal/geopyter/master},
+where the user can explore working examples without having to install geopyter
+locally.
+\end{reply}
+
+
+\begin{point}
+The authors mention that as the user base grows, so will the contributor base and from there a cumulative circular causation would start operating to increase the platform. I remain, however, in doubt of how Geopyter will be able to organise all this varying mix of contents and keep all of it following standard patterns of coding, documentation, etc. It would be interesting to know how this is planned. 
+
+
+\end{point}
+
+\begin{reply}
+We have added a subsection regarding this issue: it's an important point and we have some experience navigating these issues thanks to one author's work with PySAL. Clearly, developing teaching resources is more challenging than developing executable code; however, we believe that by placing groups of related Atoms under the 'control' of a small number of dedicated contributors a degree of coherence of style and presentation will be developed such that students on an introductory or specialist module would not encounter wide variation.
+\end{reply}
+
+
+\begin{point}
+
+In sum, I believe the initiative, and hence the paper, is very interesting. However, I am not confident the paper can, as it currently stands, be of much help to beginning lecturers as it proposes. Some work on it is required in order to achieve this.
+
+
+\end{point}
+
+\begin{reply}
+Thank you for your constructive suggestions. We feel that by taking them on in
+this revision, the manuscript has been substantially improved.
+\end{reply}
+
+
+
+
+
+\pagebreak
+% Begin a new reviewer section
+\reviewersection
+ This manuscript introduces a novel and innovative instructional system that integrates code with instructional material in mix-and-matchable Jupyter Notebooks. The manuscript is well written, but does have a few sections that mix technical concepts with domain concepts, for example. This is a useful contribution to the literature and with some minor changes is publishable. I added more detailed comments below.
+
+
+\begin{point}
+How does Open Education Resources (OER) factor into this work? This is a growing
+movement in the education space and intersects with OSS and MOOCs as well. The
+authors should consider discussing this as related work.
+
+
+\end{point}
+
+\begin{reply}
+We thank the reviewer for drawing our attention to this literature—it is not something we'd previously come across even though we have been regularly publishing our teaching material and source code!
+\end{reply}
+
+
+\begin{point}
+
+Introduction
+P1l14 - I would recommend removing the 'online' qualifier and reference simply teaching of these technologies.
+
+
+\end{point}
+
+\begin{reply}
+  Done.
+\end{reply}
+
+
+
+\begin{point}
+Pl15 - This is a jarring pivot that readers may not fully follow. Readers without a background in data science may not know that there is an 'open' ethos nor what an 'open' ethos entails. So a brief 1-sentence introduction for these topics may be useful. 
+
+\end{point}
+
+\begin{reply}
+First paragraph rewritten to remove reference to 'open' as this made it simpler while removing the jarring effect.
+\end{reply}
+
+
+\begin{point}
+
+I would recommend that the introduction introduce and cite Jupyter Notebooks. 
+\end{point}
+
+\begin{reply}
+  Done
+\end{reply}
+
+
+
+\begin{point}
+
+P2l12 - This first paragraph mixes curriculum with software. It would be helpful to disentangle these two elements while also describing their interrelationships. 
+\end{point}
+
+\begin{reply}
+Tweaked to try to make this distinction more clear.  
+\end{reply}
+
+
+\begin{point}
+
+P2l48 - space missing after Rey 2019 citation, the citation is the incorrect style. 
+\end{point}
+
+\begin{reply}
+Done.  
+\end{reply}
+
+
+\begin{point}
+
+P2l50 - wrong citation style
+\end{point}
+
+\begin{reply}
+  Corrected.
+
+\end{reply}
+
+
+\begin{point}
+
+P3l16 - e.g., should be before the citation
+\end{point}
+
+\begin{reply}
+
+  Corrected.
+\end{reply}
+
+
+
+\begin{point}
+
+P3l29 - the authors may consider broadening the quote to say something like: 'computational social/environmental/geospatial scientist' to make it more inclusive to a broader readership.  
+\end{point}
+
+\begin{reply}
+  Done.
+
+\end{reply}
+
+
+\begin{point}
+
+P3l34 - speed can also be an issue in these cases.
+\end{point}
+
+\begin{reply}
+Indeed!
+\end{reply}
+
+
+\begin{point}
+P5l4 - An introduction of Git and Github would be helpful for readers that don't have a lot of experience with them. 
+
+\end{point}
+
+\begin{reply}
+We've tweaked this slightly to try to make their nature a bit more clear but think that a more detailed introduction to Git/GitHub is not appropriate in this article.  
+\end{reply}
+
+
+\begin{point}
+Figure 1. This is a nice solution. The ability to test notebooks using the Markdown header hierarchy is very elegant. 
+\end{point}
+
+\begin{reply}
+  Thank you!
+
+\end{reply}
+
+
+\begin{point}
+Use Cases
+P8l22 - Define HE
+
+
+\end{point}
+
+\begin{reply}
+  Done.
+
+\end{reply}
+
+
+\begin{point}
+The descriptions in the use cases are clear. However, it would be nice to see a more specific use case with actual materials in addition to these broader discussion use cases. 
+\end{point}
+
+\begin{reply}
+This is was a request also made by Reviewer #1: it is difficult to know how we
+can provide a full demonstration of the tool \emph{within} the article itself and we had always planned to provide a core set of 'Atoms' as part of the publication of the article, so we have opted to focus on the core concept(s) in the article and to leave a fuller demonstration for the 'Supplementary Online Materials'. However, we \emph{also} recognise the challenges of getting one's head around the idea in the first place and have attempted to deal with this both by tidying up our explication and by offering more illustrations of how the process takes a document's implicit structure and uses that to extract relevant sections from another notebook.
+\end{reply}
+
+
+\begin{point}
+The rest of the manuscript summarizes the key points and extensions. I was happy to see the potential connection to other projects such as the Body of Knowledge.
+
+
+\end{point}
+
+\begin{reply}
+Thank you for your constructive suggestions. We are glad you see the value in
+linking this work to projects such as the Body of Knowledge.
+\end{reply}
+
+\pagebreak
+\reviewersection
+
+\begin{point}
+Fascinating to see how the development of this resource came about, and how its design aims to fill in a niche discovered within the teaching of spatial analytics. I was intrigued by the idea that this could connect the streams from the FOSS and MOOC movements, as the abstract pointed towards, but found myself not completely understanding how this fit in that trajectory after all in the sections describing the process. I believe a better historical grounding with actual telling of timelines and developments in those powerful movements would have situated this GeoPyTeR story more strongly. 
+
+
+\end{point}
+
+\begin{reply}
+
+We hope that the substantial edits and incorporation of OER literature has helped to position GeoPyTer more clearly in the reviewer's mind. We would suggest that a timeline is not strictly relevant here as GeoPyTer is not a MOOC and does not depend on any specific FOSS technologies other than iPython/Jupyter (where we've slightly adjusted our initial presentation of the material) to make this more clear.
+
+\end{reply}
+
+
+\begin{point}
+
+That said, this design narrative seems a bit smoothed over. It omits reflection
+on some of the challenges, and glosses over what might be a good opportunity to
+reveal what might be remaining or conquered flaws, false starts,
+wheel-reinventing, or other elements that surely hold some insights for audience
+of this journal. 
+
+\end{point}
+
+\begin{reply}
+We have tried to expand on some of the unresolved challenges
+and in particular that of ensuring overall coherence in the examples (including
+data!) provided. Space constraints precluded a more thorough examination of the
+'false starts', but we hope that revisions to the initial submission have helped
+in this regard.
+\end{reply}
+
+\begin{point}
+Not being a developer, I had a hard time following some of the heavy jargon in
+many spots that might only need some signposts to reach a broader community of
+interest. It is important to identify the "instructors" audience more clearly: I
+am assuming that this is for university faculty teaching to undergraduates /
+graduates at mostly US / European institutions, but if that assumption is wrong,
+that underscores the need for the author to make that explicit. 
+
+\end{point}
+
+\begin{reply}
+We have
+specified a bit more clearly that the default assumption here is of technically
+sophisticated HE staff, but we also wish to be highlight that this is not the
+*only* group that could make use of such material. Hopefully, our edits and
+additions (especially the illustrative material) have mitigated at least a
+little bit some of the more forbidding jargon.
+
+\end{reply}
+
+
+\begin{point} The introduction should start with the problem and purpose. Two
+other brief mentions seem missed opportunities: the reference to "best
+practices" and reference to the Body of Knowledge, which seem could catapult
+uptake of such a resource.
+\end{point}
+
+\begin{reply}
+We have included an earlier reference to the BoK
+where we think that this helps to set expectations about the managed nature of
+contributions.
+
+\end{reply}
+
+
+\begin{point} Finally, it surprised me that the use case scenarios were only
+"potential use" and not actual end-user cases. This led me to wonder who is
+using the resource in what actual context? How many? where? for which content?
+for which students? Does it rise to the usage potential with MOOCs and reach a
+massive audience? would some of the pitfalls of MOOCs befall this resource as
+well or not? How might some of the chalelnges of the open movement be resolved
+or remain? This also reveals how the article is devoid of time and timelines,
+which would orient the reader.
+
+
+\end{point}
+
+\begin{reply}
+This does not replace or augment MOOCs, nor do
+we expect it to have the same kind of impact as it sits alongside such tools
+within domains where specific technical training is called for. We have used it
+in fits and starts already, and have made a set of Atoms and Sessions available
+via the Supplementary Online Material, but our own challenges of not having
+enough time to either finish development and write up the tool for publication
+have hampered wider adoption. We are hoping to secure funding to allow further
+development but felt that we needed to 'get the word out'.
+\end{reply}
+
+
+\end{document}
